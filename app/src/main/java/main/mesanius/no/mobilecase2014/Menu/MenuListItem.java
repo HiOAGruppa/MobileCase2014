@@ -1,5 +1,7 @@
 package main.mesanius.no.mobilecase2014.Menu;
 
+import main.mesanius.no.mobilecase2014.R;
+
 public class MenuListItem {
 
     private String title;
@@ -7,6 +9,14 @@ public class MenuListItem {
     private double price;
     private int id; 
     private String desc;
+
+    public MenuListItem(int id, int price, String name){
+        this.id = id;
+        this.price = (double) price;
+        title = name;
+        desc = "tulleDesc, den finnes ikke for menyobjekt";
+        icon = R.drawable.ic_launcher;
+    }
 
     public MenuListItem(String title, int icon, int i, String d, double p) {
         this.title = title;

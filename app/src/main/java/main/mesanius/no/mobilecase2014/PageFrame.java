@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import main.mesanius.no.mobilecase2014.API.CallMenu;
 import main.mesanius.no.mobilecase2014.API.CallMenuItem;
 import main.mesanius.no.mobilecase2014.Menu.ItemFragment;
 import main.mesanius.no.mobilecase2014.Menu.MenuFragment;
@@ -33,8 +34,13 @@ public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelect
 
         //Bytte ut det tomme Layoutet i PageFrame med MenyFragment
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.root_frame, new MenuFragment());
-        transaction.commit();
+
+        //get menu from API and generate menufragment
+        new CallMenu(transaction).execute("menugen");
+
+        //included in CallMenu
+     //   transaction.replace(R.id.root_frame, new MenuFragment());
+      //  transaction.commit();
 
         return view;
     }

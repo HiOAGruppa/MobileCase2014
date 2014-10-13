@@ -7,9 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import main.mesanius.no.mobilecase2014.API.APIManager;
 import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
 
@@ -19,12 +19,11 @@ public class MenuFragment extends ListFragment {
 	TypedArray menuIcons;
 
 	MenuListAdapter adapter;
-	private List<MenuListItem> MenuListItems;
+	private List<MenuListItem> menuListItems;
 
 	OnHeadlineSelectedListener mCallback;
 
     public MenuFragment() {
-
     }
 
 	public interface OnHeadlineSelectedListener {
@@ -36,16 +35,26 @@ public class MenuFragment extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		menutitles = getResources().getStringArray(R.array.titles);
+        if(savedInstanceState != null){
+            String JSONMenu = savedInstanceState.getString("JSONMenu");
+            menuListItems = APIManager.getMenuFromString(JSONMenu);
+        }else{
+            String JSONMenu = getArguments().getString("JSONMenu");
+            menuListItems = APIManager.getMenuFromString(JSONMenu);
+        }
 
+        //original menuitemsList generation DELETE LATER
+        /*
 		MenuListItems = new ArrayList<MenuListItem>();
-		
+
 		for (int i = 0; i < menutitles.length; i++) {
 			MenuListItem items = new MenuListItem(menutitles[i], R.drawable.ic_launcher,
 					i, "En rett fra resturant menyen", 250.00);
 			
 			MenuListItems.add(items);
 		}
-		adapter = new MenuListAdapter(getActivity(), MenuListItems);
+        */
+		adapter = new MenuListAdapter(getActivity(), menuListItems);
 		setListAdapter(adapter);
 	}
 
@@ -66,7 +75,7 @@ public class MenuFragment extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// Notify the parent activity of selected item
-		MenuListItem item = MenuListItems.get(position);
+		MenuListItem item = menuListItems.get(position);
 
 
 		mCallback.onArticleSelected(position, item);

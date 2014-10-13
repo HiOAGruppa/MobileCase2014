@@ -10,9 +10,11 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import main.mesanius.no.mobilecase2014.Menu.MenuItem;
+import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
 
 /**
  * Created by NegatioN on 13.10.2014.
@@ -73,18 +75,18 @@ public class APIManager {
     }
 
     //gets all the menuitems from our database and returns them in an arraylist.
-    public static ArrayList<MenuItem> getMenuFromString(String in){
+    public static List<MenuListItem> getMenuFromString(String in){
         int menulength = 0;
-        ArrayList<MenuItem> menu = new ArrayList<MenuItem>();
+        ArrayList<MenuListItem> menu = new ArrayList<MenuListItem>();
         try {
             JSONArray menuArray = new JSONArray(in);
             menulength = menuArray.length();
             int i = 0;
             while(i < menulength){
                 //add menuitem to menu from jsonobject
-                MenuItem mi = getMenuItemFromJSON(menuArray.getJSONObject(i));
+                MenuListItem mi = getMenuItemFromJSON(menuArray.getJSONObject(i));
                 menu.add(mi);
-                Log.d("menuArray.add", "Added menuitem: " + mi.getName());
+                Log.d("menuArray.add", "Added menuitem: " + mi.getTitle());
                 i++;
             }
         }catch(Exception e){
@@ -112,13 +114,13 @@ public class APIManager {
         return null;
     }
 
-    public static MenuItem getMenuItemFromJSON(JSONObject reader){
+    public static MenuListItem getMenuItemFromJSON(JSONObject reader){
         try {
             String name = reader.getString("name");
             int price = Integer.parseInt(reader.getString("price"));
             int id = Integer.parseInt(reader.getString("id"));
 
-            return new MenuItem(name, price, id);
+            return new MenuListItem(id, price, name);
         }catch (Exception e){
             e.printStackTrace();
         }
