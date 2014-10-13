@@ -43,6 +43,9 @@ public class MenuFragment extends ListFragment {
             menuListItems = APIManager.getMenuFromString(JSONMenu);
         }
 
+        // new PostOrder(getActivity()).execute("test");
+
+
         //original menuitemsList generation DELETE LATER
         /*
 		MenuListItems = new ArrayList<MenuListItem>();

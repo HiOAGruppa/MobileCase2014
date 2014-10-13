@@ -3,10 +3,18 @@ package main.mesanius.no.mobilecase2014.API;
 import android.content.Context;
 import android.util.Log;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
@@ -15,6 +23,7 @@ import java.util.Scanner;
 
 import main.mesanius.no.mobilecase2014.Menu.MenuItem;
 import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
+import main.mesanius.no.mobilecase2014.Order.OrderItem;
 
 /**
  * Created by NegatioN on 13.10.2014.
@@ -23,7 +32,7 @@ public class APIManager {
 
     public final static String INTENT_MESSAGE = "intentmessagefinal";
 
-    public final static String apiURL = "http://localhost:8080/rest/menu/";
+    public final static String apiURL = "http://localhost:8080/rest/";
     private Context context;
 
 
@@ -32,9 +41,9 @@ public class APIManager {
         String urlString;
         //if there are no extra string-inputs, we get the full menu.
         if(!strings[0].equals(""))
-            urlString = apiURL + strings[0]; // url to call
+            urlString = apiURL + "menu/"+strings[0]; // url to call
         else
-            urlString = apiURL;
+            urlString = apiURL + "menu/";
 
         Log.d("ApiUrl", urlString);
 
@@ -67,11 +76,69 @@ public class APIManager {
     }
 
 
+    //lets us send an order to create an order in api-db
+    public static String sendJSONOrder(OrderItem order){
+        InputStream in = null;
+        String result = "";
+
+        String urlString = apiURL + "order";
+
+        try{
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(urlString);
+
+            String jsonData = "";
+
+            //create JSONobject
+            JSONObject jsonObject = new JSONObject();
+            jsonObject.accumulate("quantity", order.getQuantity());
+            jsonObject.accumulate("item", order.getItemId());
+
+            jsonData = jsonObject.toString();
+
+            Log.d("HttpPost.Jsondata", jsonData);
+
+            StringEntity se = new StringEntity(jsonData);
+
+            httpPost.setEntity(se);
+
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+
+            in = httpResponse.getEntity().getContent();
+            if(in != null){
+                result = convertPostStreamToString(in);
+                Log.d("httppost.result", result);
+                //result = convertStreamToString(in);
+            }else{
+                result = "Post did not work";
+            }
+            in.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
 
     //converts our inputstream to a JSON-string
     private static String convertStreamToString(InputStream is){
         Scanner s = new Scanner(is).useDelimiter("\\A");
         return s.hasNext() ? s.next() : "";
+    }
+
+    private static String convertPostStreamToString(InputStream in)throws IOException{
+        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        String line = "";
+        StringBuilder sb = new StringBuilder();
+
+        while((line = br.readLine()) != null)
+            sb.append(line);
+
+        return sb.toString();
     }
 
     //gets all the menuitems from our database and returns them in an arraylist.
