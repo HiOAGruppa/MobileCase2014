@@ -99,8 +99,9 @@ public class APIManager {
             String description = reader.getString("description");
             String name = reader.getString("name");
             int price = Integer.parseInt(reader.getString("price"));
+            int id = Integer.parseInt(reader.getString("id"));
 
-            return new MenuItem(name,description,price);
+            return new MenuItem(name,description,price,id);
 
 
         }catch (Exception e){
@@ -113,8 +114,9 @@ public class APIManager {
         try {
             String name = reader.getString("name");
             int price = Integer.parseInt(reader.getString("price"));
+            int id = Integer.parseInt(reader.getString("id"));
 
-            return new MenuItem(name, price);
+            return new MenuItem(name, price, id);
         }catch (Exception e){
             e.printStackTrace();
         }

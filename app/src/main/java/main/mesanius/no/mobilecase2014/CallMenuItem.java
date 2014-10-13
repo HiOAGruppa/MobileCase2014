@@ -9,7 +9,7 @@ import android.os.AsyncTask;
  */
 public class CallMenuItem extends AsyncTask<String, String, MenuItem> {
 
-    public final static String INTENT_NAME = "intent_name", INTENT_DESC = "intent_desc", INTENT_PRICE = "intent_price";
+    public final static String INTENT_NAME = "intent_name", INTENT_DESC = "intent_desc", INTENT_PRICE = "intent_price", INTENT_ID = "intent_id";
 
 
     private Context context;
@@ -38,6 +38,7 @@ public class CallMenuItem extends AsyncTask<String, String, MenuItem> {
         i.putExtra(INTENT_NAME, result.getName());
         i.putExtra(INTENT_DESC, result.getDescription());
         i.putExtra(INTENT_PRICE, result.getPrice());
+        i.putExtra(INTENT_ID, result.getId());
 
         //not needed for fragment-start
         i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

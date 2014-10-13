@@ -25,12 +25,13 @@ public class Mesanius extends Activity {
         String itemName = intent.getStringExtra(CallMenuItem.INTENT_NAME);
         String itemDesc = intent.getStringExtra(CallMenuItem.INTENT_DESC);
         int itemPrice = intent.getIntExtra(CallMenuItem.INTENT_PRICE, 0);
+        int itemId = intent.getIntExtra(CallMenuItem.INTENT_ID,0);
 
         nextItem = (Button) findViewById(R.id.bNextItem);
         displayName = (TextView) findViewById(R.id.tvNameDisplay);
 
         if(itemName != null) {
-            displayName.setText(itemName + "\n" + itemDesc + "\n" + itemPrice);
+            displayName.setText(itemName + "\n" + itemDesc + "\n" + itemPrice + "\n" + itemId);
 
         }
 

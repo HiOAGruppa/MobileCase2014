@@ -6,6 +6,9 @@ import java.util.ArrayList;
 
 /**
  * Created by NegatioN on 13.10.2014.
+ *
+ * Usikker på om vi burde legge Meny-koden inni her som private class eller noe for å håndtere info
+ * evnt må vi lage en load-screen herfra, og starte meny-class etterpå.
  */
 public class CallMenu extends AsyncTask<String, String, ArrayList<MenuItem>> {
 
