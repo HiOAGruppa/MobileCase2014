@@ -4,5 +4,26 @@
     <string name="app_name">MobileCase2014</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="title_activity_my">MyActivity</string>
+    <string name="title_section1">Meny</string>
+    <string name="title_section2">Bestilling</string>
+    <string name="title_section3">Logg inn</string>
+    <string name="title_activity_main">Mesanius</string>
+
+    <string name="imgdesc">imgdesc</string>
+    <string name="priceString">Pris</string>
+    <string name="buyString">Kjøp</string>
+
+    <string-array name="titles">
+        <item>Home</item>
+        <item>Tutorials</item>
+        <item>My Apps</item>
+        <item>OS Versions</item>
+        <item>Tools</item>
+        <item>About Us</item>
+        <item>About Us2</item>
+        <item>About Us3</item>
+    </string-array>
+
 
 </resources>
