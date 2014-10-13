@@ -11,8 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.mesanius.no.mobilecase2014.MainActivity;
-import main.mesanius.no.mobilecase2014.Menu.MenuListAdapter;
-import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
 import main.mesanius.no.mobilecase2014.R;
 
 public class MenuFragment extends ListFragment {
@@ -28,6 +26,7 @@ public class MenuFragment extends ListFragment {
     public MenuFragment() {
 
     }
+
 	public interface OnHeadlineSelectedListener {
 		/** Called by HeadlinesFragment when a list item is selected */
 		public void onArticleSelected(int p, MenuListItem i);
@@ -68,6 +67,8 @@ public class MenuFragment extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// Notify the parent activity of selected item
 		MenuListItem item = MenuListItems.get(position);
+
+
 		mCallback.onArticleSelected(position, item);
 	}
 

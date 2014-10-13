@@ -1,10 +1,13 @@
 package main.mesanius.no.mobilecase2014.API;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
+import android.os.Bundle;
 
+import main.mesanius.no.mobilecase2014.Menu.ItemFragment;
 import main.mesanius.no.mobilecase2014.Menu.MenuItem;
+import main.mesanius.no.mobilecase2014.R;
 
 /**
  * Created by NegatioN on 12.10.2014.
@@ -15,9 +18,12 @@ public class CallMenuItem extends AsyncTask<String, String, MenuItem> {
 
 
     private Context context;
+    private FragmentTransaction fragmentTransaction;
+    private ItemFragment itemFragment;
 
-    public CallMenuItem(Context context){
-        this.context = context;
+    public CallMenuItem(FragmentTransaction fragmentTransaction, ItemFragment itemFragment){
+        this.fragmentTransaction = fragmentTransaction;
+        this.itemFragment = itemFragment;
     }
 
 
@@ -32,20 +38,25 @@ public class CallMenuItem extends AsyncTask<String, String, MenuItem> {
 
     @Override
     protected void onPostExecute(MenuItem result) {
+        itemFragment = new ItemFragment();
 
-        //her kan vi starte fragmentet vil jeg tro. Send med intent-data
-        Intent i = new Intent(context, Mesanius.class);
+        //generate bundle for start of itemfragment
+        Bundle args = new Bundle();
+        args.putInt("id",result.getId());
+        args.putString("title", result.getName());
+        args.putString("desc", result.getDescription());
+        args.putDouble("price", result.getPrice());
+        args.putInt("image", R.drawable.ic_launcher);
+        itemFragment.setArguments(args);
 
-        //send the three info-fields of a single menuitem.
-        i.putExtra(INTENT_NAME, result.getName());
-        i.putExtra(INTENT_DESC, result.getDescription());
-        i.putExtra(INTENT_PRICE, result.getPrice());
-        i.putExtra(INTENT_ID, result.getId());
 
-        //not needed for fragment-start
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        // Replace whatever is in the fragment_container view with this fragment,
+        // and add the transaction to the back stack so the user can navigate back
+        fragmentTransaction.replace(R.id.root_frame, itemFragment);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
+        fragmentTransaction.commit();
 
-        context.startActivity(i);
 
     }
 

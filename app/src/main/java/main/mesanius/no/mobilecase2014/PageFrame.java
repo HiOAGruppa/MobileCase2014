@@ -4,11 +4,11 @@ package main.mesanius.no.mobilecase2014;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import main.mesanius.no.mobilecase2014.API.CallMenuItem;
 import main.mesanius.no.mobilecase2014.Menu.ItemFragment;
 import main.mesanius.no.mobilecase2014.Menu.MenuFragment;
 import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
@@ -43,6 +43,9 @@ public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelect
     public void onArticleSelected(int p, MenuListItem item) {
         //setMenuText(item.getTitle());
 
+        //FLAGGED FOR DELETEION BEFORE Hand-in!
+        //ORIGINAL METHOD!!
+        /*
         itemFragment = new ItemFragment();
         Bundle args = new Bundle();
         args.putInt("id",p);
@@ -51,6 +54,7 @@ public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelect
         args.putDouble("price", item.getPrice());
         args.putInt("image",item.getIcon());
         itemFragment.setArguments(args);
+
 
         FragmentTransaction transaction = getFragmentManager()
                 .beginTransaction();
@@ -63,6 +67,16 @@ public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelect
         transaction.commit();
 
         Log.d("BACKSTACK:", "" + getFragmentManager().getBackStackEntryCount());
+        */
+
+        //ORIGINAL METHOD END
+        FragmentTransaction transaction = getFragmentManager()
+                .beginTransaction();
+
+        itemFragment = new ItemFragment();
+
+        new CallMenuItem(transaction, itemFragment).execute(String.valueOf(item.getId()));
+
     }
 
     @Override
