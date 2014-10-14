@@ -33,7 +33,7 @@ public class MyPageFragment extends Fragment {
 
 		}
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.my_page_layout, container,
+		return inflater.inflate(R.layout.my_page, container,
 				false);
 	}
 

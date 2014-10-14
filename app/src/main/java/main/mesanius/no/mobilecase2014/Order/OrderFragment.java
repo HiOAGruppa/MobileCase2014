@@ -1,6 +1,7 @@
 package main.mesanius.no.mobilecase2014.Order;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import main.mesanius.no.mobilecase2014.MainActivity;
+import main.mesanius.no.mobilecase2014.Menu.ItemFragment;
 import main.mesanius.no.mobilecase2014.R;
 
 
@@ -47,8 +49,13 @@ public class OrderFragment extends Fragment{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).clearOrderList();
-                updateOrderFragment();
+                FragmentTransaction transaction = getFragmentManager()
+                        .beginTransaction();
+                transaction.replace(R.id.order_frame, new OrderSettingsFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+
+                //updateOrderFragment();
             }
         });
 

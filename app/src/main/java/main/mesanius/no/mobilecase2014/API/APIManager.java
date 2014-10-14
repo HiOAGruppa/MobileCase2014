@@ -51,7 +51,7 @@ public class APIManager {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setReadTimeout(100000);
-            urlConnection.setConnectTimeout(500000);
+            urlConnection.setConnectTimeout(150000);
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
 
