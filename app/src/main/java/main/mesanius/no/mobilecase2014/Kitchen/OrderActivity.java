@@ -1,4 +1,4 @@
-package main.mesanius.no.mobilecase2014;
+package main.mesanius.no.mobilecase2014.Kitchen;
 
 import android.app.Activity;
 import android.os.Bundle;
@@ -8,11 +8,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
-import main.mesanius.no.mobilecase2014.Order.OrderItem;
+import main.mesanius.no.mobilecase2014.R;
 
 public class OrderActivity extends Activity {
 	 private ListView listView;

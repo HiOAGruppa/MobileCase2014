@@ -1,4 +1,4 @@
-package main.mesanius.no.mobilecase2014;
+package main.mesanius.no.mobilecase2014.Kitchen;
 
 import java.util.ArrayList;
 
@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
+
+import main.mesanius.no.mobilecase2014.R;
 
 
 public class OrderItemAdapter extends BaseAdapter{

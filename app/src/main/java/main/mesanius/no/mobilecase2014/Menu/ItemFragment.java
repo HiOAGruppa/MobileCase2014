@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
@@ -57,27 +58,31 @@ public class ItemFragment extends Fragment {
     }
 
     public void updateArticleView() {
-        final TextView title = (TextView) getActivity().findViewById(R.id.itemTitle);
+        final MainActivity activity = (MainActivity)getActivity();
+
+        final TextView title = (TextView) activity.findViewById(R.id.itemTitle);
         title.setText(name);
 
-        final TextView itemDesc = (TextView) getActivity().findViewById(R.id.itemDesc);
+        final TextView itemDesc = (TextView) activity.findViewById(R.id.itemDesc);
         itemDesc.setText(desc);
 
-        TextView itemPrice = (TextView) getActivity().findViewById(R.id.itemPrice);
+        TextView itemPrice = (TextView) activity.findViewById(R.id.itemPrice);
         DecimalFormat df = new DecimalFormat("#.##");
         itemPrice.setText(df.format(price) + ",-");
 
-        ImageView image = (ImageView) getActivity().findViewById(R.id.menuItemImage);
-        int imgid = getActivity().getResources().getIdentifier("img_" + id, "drawable", getActivity().getPackageName());
+        ImageView image = (ImageView) activity.findViewById(R.id.menuItemImage);
+        int imgid = activity.getResources().getIdentifier("img_" + id, "drawable", activity.getPackageName());
         image.setImageResource(imgid);
 
 
-        final Button order = (Button) getActivity().findViewById(R.id.itemOrderBtn);
+        final Button order = (Button) activity.findViewById(R.id.itemOrderBtn);
 
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).addToOrderList(new OrderListItem(name, price, 1));
+                activity.addToOrderList(new OrderListItem(name, price, 1));
+                Toast toast = Toast.makeText(activity.getApplicationContext(), name + " lagt til.", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }

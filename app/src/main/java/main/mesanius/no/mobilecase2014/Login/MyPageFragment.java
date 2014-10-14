@@ -2,7 +2,7 @@ package main.mesanius.no.mobilecase2014.Login;
 
 import android.app.Activity;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,13 +13,7 @@ import android.widget.Toast;
 import main.mesanius.no.mobilecase2014.R;
 
 public class MyPageFragment extends Fragment {
-	OnHeadlineSelectedListener mCallback;
 	LinearLayout home, rest;
-
-	public interface OnHeadlineSelectedListener {
-		/** Called by HeadlinesFragment when a list item is selected */
-		public void payAndConfirm();
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,15 +56,6 @@ public class MyPageFragment extends Fragment {
                 Toast.makeText(getActivity(), "Show orders pressed", Toast.LENGTH_SHORT);
             }
         });
-        final Button loggOut = (Button)getActivity().findViewById(R.id.goBack);
-        loggOut.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(getActivity(), "Logging out pressed", Toast.LENGTH_SHORT);
-            }
-        });
-		
 	}
 
 
@@ -79,27 +64,4 @@ public class MyPageFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 
 	}
-
-	/*
-	 * @Override public View onCreateView(LayoutInflater inflater, ViewGroup
-	 * container, Bundle savedInstanceState) { // set the layout you want to
-	 * display in First Fragment View view = inflater.inflate(R.layout.testfrag,
-	 * container, false); return view;
-	 * 
-	 * }
-	 */
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception.
-		try {
-			mCallback = (OnHeadlineSelectedListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement OnHeadlineSelectedListener");
-		}
-	}
-
 }

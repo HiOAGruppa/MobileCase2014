@@ -1,4 +1,4 @@
-package main.mesanius.no.mobilecase2014;
+package main.mesanius.no.mobilecase2014.Kitchen;
 
 public class OrderItemActivity {
 	private String title, desc;

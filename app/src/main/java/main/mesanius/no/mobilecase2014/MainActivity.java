@@ -9,18 +9,22 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import main.mesanius.no.mobilecase2014.Login.LoginFragment;
-import main.mesanius.no.mobilecase2014.Order.OrderFragment;
+import main.mesanius.no.mobilecase2014.Frames.LoginFrame;
+import main.mesanius.no.mobilecase2014.Frames.MenuFrame;
+import main.mesanius.no.mobilecase2014.Frames.OrderFrame;
+import main.mesanius.no.mobilecase2014.Kitchen.OrderActivity;
 import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
+    public static final int USER_NONE = 0, USER_CUSTOMER = 1, USER_TABLE = 2, USER_KITCHEN = 3 ;
 
     //Variabler for å kontrollere tabnavigasjon
     private ViewPager viewPager;
@@ -29,8 +33,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     //FrameLayout som fungerer som container for andre fragments
     public MenuFrame menuFrame = new MenuFrame();
     public OrderFrame orderFrame = new OrderFrame();
+    public LoginFrame loginFrame = new LoginFrame();
 
+
+    //Liste av ordre for kommunikasjon mellom meny og ordreliste
     private ArrayList<OrderListItem> orderList = new ArrayList<OrderListItem>();
+
+    //Variabel for å avgjøre om appen ikke er logget inn, er logget inn som hjemmekunde,
+    //eller bord på restaurant
+    public int user = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +50,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         //Oppretter og styrer ViewPager som håndterer swipes og bytte av tabs
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new VPAdapter(getFragmentManager(), menuFrame, orderFrame));
+        viewPager.setAdapter(new VPAdapter(getFragmentManager(), menuFrame, orderFrame, loginFrame));
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             //Obligatoriske metoder for ViewPager
             @Override
@@ -75,6 +86,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         );
     }
 
+    public int setUser(int user) {
+        this.user = user;
+        return this.user;
+    }
+
     @Override
     public void onBackPressed() {
         if(getFragmentManager().getBackStackEntryCount() > 0)
@@ -86,7 +102,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     public void goToSettings() {
         Intent intent = new Intent(this, Settings.class);
-        finish();
         startActivity(intent);
     }
 
@@ -99,9 +114,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         viewPager.setCurrentItem(tab.getPosition());
-        getFragmentManager().popBackStack();
         if(tab.getPosition() == 1)
-            getFragmentManager().findFragmentByTag("OrderFrag").onResume();
+            orderFrame.updateFragment();
+        if(tab.getPosition() == 2)
+            loginFrame.updateFragment();
+            getFragmentManager().popBackStack();
     }
 
     @Override
@@ -140,7 +157,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public boolean addToOrderList(OrderListItem item){
-        Log.d("Added orderItem: ", item.getName());
         for (OrderListItem i: orderList) {
             if (i.getName().equals(item.getName())){
                 i.setQuantity(true);
@@ -160,8 +176,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         StringBuilder outString = new StringBuilder();
         double price = 0;
 
-        outString.append("").append("\t\t\t").append("Antall")
-                .append("\t\t").append("Pris");
+        outString.append("").append("\t\t\t\t").append("Antall")
+                .append("\t\t").append("Pris\n");
         for(OrderListItem item: orderList)
         {
             outString.append(item.getName()).append("\t\t\t").append(item.getQuantity())
@@ -178,17 +194,44 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void clearOrderList(){
         orderList.clear();
     }
+
+
+    //Onclick-Metoder
+    public void login(View view){
+        String userName = ((EditText)findViewById(R.id.usrName)).getText().toString();
+        if(userName.equals("Kunde")) {
+            setUser(MainActivity.USER_CUSTOMER);
+            actionBar.getSelectedTab().setText("Min Side");
+        }
+        else if (userName.equals("Bord"))
+            setUser(MainActivity.USER_TABLE);
+        else if (userName.equals("Kjokken")) {
+            setUser(MainActivity.USER_KITCHEN);
+            goToOrders();
+        }
+
+        loginFrame.updateFragment();
+    }
+
+    public void logOut(View view){
+        setUser(MainActivity.USER_NONE);
+        actionBar.getSelectedTab().setText("Logg inn");
+        loginFrame.updateFragment();
+    }
 }
 
 //Custom ViewPager adapter. Styrer veksling mellom fragmenter ved swipe eller klikk på tab
 class VPAdapter extends FragmentPagerAdapter {
     MenuFrame menuFrame;
     OrderFrame orderFrame;
+    LoginFrame loginFrame;
 
-    public VPAdapter(FragmentManager fm, MenuFrame menuFrame, OrderFrame orderFrame) {
+    public VPAdapter(FragmentManager fm, MenuFrame menuFrame, OrderFrame orderFrame, LoginFrame loginFrame) {
         super(fm);
         this.menuFrame = menuFrame;
         this.orderFrame = orderFrame;
+        this.loginFrame = loginFrame;
+
     }
 
     //Velger fragment ved swipe (implementert i Tablistener for å også kjøre ved valg av tab)
@@ -201,7 +244,7 @@ class VPAdapter extends FragmentPagerAdapter {
                 fragment = orderFrame;
                 break;
             case 2:
-                fragment = new LoginFragment();
+                fragment = loginFrame;
                 break;
             default:
                 fragment = menuFrame;

@@ -24,15 +24,8 @@ public class MenuFragment extends ListFragment {
 	MenuListAdapter adapter;
 	private List<MenuListItem> menuListItems;
 
-	OnHeadlineSelectedListener mCallback;
-
     public MenuFragment() {
     }
-
-	public interface OnHeadlineSelectedListener {
-		/** Called by HeadlinesFragment when a list item is selected */
-		public void onArticleSelected(int p, MenuListItem i);
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {

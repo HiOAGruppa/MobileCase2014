@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".OrderActivity"
+            android:name=".Kitchen.OrderActivity"
             android:label="@string/title_activity_order" >
         </activity>
         <activity
