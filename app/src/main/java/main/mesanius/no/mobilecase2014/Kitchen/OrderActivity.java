@@ -2,6 +2,7 @@ package main.mesanius.no.mobilecase2014.Kitchen;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,10 +38,14 @@ public class OrderActivity extends Activity {
         //TextView priceView = (TextView) findViewById(R.id.priceTotalNumTextView);
 
         //LinkedList<Order> allOrders = new LinkedList<Order>();//APIManager.g
-        Order testOrder = new Order(3,0);
+        /*Order testOrder = new Order(3,0);
         testOrder.addOrderItem(new OrderItem(3,2));
         testOrder.addOrderItem(new OrderItem(6,2));
-        orders.add(testOrder);
+        orders.add(testOrder);*/
+
+        for (Order r: orders){
+            Log.d("Item", ""+r.getOrderId());
+        }
 
         menuList = MainActivity.getMenuList();
 
@@ -48,7 +53,6 @@ public class OrderActivity extends Activity {
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(new OrderItemAdapter(this, itemList));
-
 
 
         final LinearLayout callScreen = (LinearLayout)findViewById(R.id.kelnerNeeded);
@@ -69,24 +73,26 @@ public class OrderActivity extends Activity {
 
         ArrayList<OrderItemActivity> listOfItems = new ArrayList<OrderItemActivity>();
 
-        OrderItemActivity itemForList = new OrderItemActivity(1,"Order 1", "Pizza:3\nBoller:1", 1);
-        itemForList.setTableId(5);
+        //OrderItemActivity itemForList = new OrderItemActivity(1,"Order 1", "Pizza:3\nBoller:1", 1);
+        //itemForList.setTableId(5);
 
         //to test-orders for orders from users and tables
-        listOfItems.add(itemForList);//order from a table
-        listOfItems.add(new OrderItemActivity(2,"Order 2", "Biff:2", 0,4));//order from an user(id:5)
+        //listOfItems.add(itemForList);//order from a table
+        //listOfItems.add(new OrderItemActivity(2,"Order 2", "Biff:2", 0,4));//order from an user(id:5)
 
-        String desc = "";
 
         for(Order order : orders)
-        {     //finds the name of all the items in an order
+        {
+            String desc = "";
+
+            //finds the name of all the items in an order
               for(OrderItem singleItem: order.getOrderItems())
               {
                   MenuListItem menuItem = getMenuItem(singleItem.getItemId());
                   desc+= menuItem.getTitle() + ": "+ singleItem.getQuantity()+ "\n";
               }
-              OrderItemActivity orderItem = new OrderItemActivity(order.getOrderId(),"Order " +
-              order.getOrderId(), desc,2); // all is get-at store
+
+            OrderItemActivity orderItem = new OrderItemActivity(order.getOrderId(),"Order " + order.getOrderId(), desc,2); // all is get-at store
             listOfItems.add(orderItem);
         }
         return listOfItems;
