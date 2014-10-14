@@ -30,7 +30,7 @@ public class MenuFrame extends Fragment {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         //get menu from API and generate menufragment
-        new CallMenu(transaction).execute("menugen");
+        new CallMenu(getActivity(), transaction).execute("menugen");
 
         return view;
     }

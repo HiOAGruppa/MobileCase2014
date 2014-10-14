@@ -33,7 +33,7 @@ public class APIManager {
 
     public final static String INTENT_MESSAGE = "intentmessagefinal";
 
-    public final static String apiURL = "http://10.0.2.2:8080/rest/";
+    public final static String apiURL = "http://localhost:8080/rest/";
     private Context context;
 
 
@@ -63,6 +63,41 @@ public class APIManager {
             Log.d("JSONdata.raw", data);
             in.close();
 
+            return data;
+        }catch(Exception e){
+            Log.d("GetJson", "error");
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    //returns the raw JSON-string
+    public static String fetchJSON(CallMenu callMenu, String string){
+        //apiUrl in addition to spesific path such as order/ menu/ or menu/item
+        String urlString = apiURL +string; // url to call
+
+        Log.d("ApiUrl", urlString);
+
+        InputStream in = null;
+
+        try{
+            URL url = new URL(urlString);
+            HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+            callMenu.sendProgress(10);
+            urlConnection.setReadTimeout(100000);
+            urlConnection.setConnectTimeout(500000);
+            urlConnection.setRequestMethod("GET");
+            urlConnection.setDoInput(true);
+            callMenu.sendProgress(50);
+            urlConnection.connect();
+
+            in = urlConnection.getInputStream();
+            String data = convertStreamToString(in);
+            callMenu.sendProgress(70);
+            Log.d("JSONdata.raw", data);
+            in.close();
+            callMenu.sendProgress(100);
             return data;
         }catch(Exception e){
             Log.d("GetJson", "error");

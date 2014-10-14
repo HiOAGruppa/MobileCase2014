@@ -9,6 +9,9 @@
     <string name="title_section2">Bestilling</string>
     <string name="title_section3">Logg inn</string>
     <string name="title_activity_main">Mesanius</string>
+    <string name="userFields">Fornavn:\nEtternavn:\nE-post:\nTelefon:\nAdresse:\nPoststed:\nPostnr:</string>
+    <string name="userText">Ola\nNormann\nola.nor@nor.no\n99887766\nOsloveien\nOslo\n0445</string>
+    <string name="orderTest">Bestill</string>
 
     <string name="imgdesc">imgdesc</string>
     <string name="priceString">Pris</string>
