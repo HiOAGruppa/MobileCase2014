@@ -31,6 +31,13 @@ public class OrderActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
 
+      //  HALLO FÅ EXTRA STRINGEN SOM HETER ORDERS();
+
+       // String HALLO = "HALLO";
+        //List<Order> order = APIManager.getAllOrdersFromString(HALLO);
+
+        //GJØR TING MED ORDERS
+
         generateShoppingItems(itemList);
         //TextView priceView = (TextView) findViewById(R.id.priceTotalNumTextView);
         String JSONString = getIntent().getStringExtra("");

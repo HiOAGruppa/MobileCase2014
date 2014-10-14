@@ -2,8 +2,10 @@ package main.mesanius.no.mobilecase2014.Order;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +43,30 @@ public class OrderFragment extends Fragment {
         updateOrderFragment();
     }
 
+    private void showActivityOverlay() {
+
+        final Dialog dialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.setContentView(R.layout.receipt);
+
+        TextView receiptText = (TextView)dialog.findViewById(R.id.reciptString);
+        receiptText.setText(((MainActivity)getActivity()).getToStringList());
+        receiptText.setTextColor(Color.BLACK);
+
+        final Button btn = (Button)dialog.findViewById(R.id.confirmBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //add order
+                ((MainActivity)getActivity()).clearOrderList();
+                updateOrderFragment();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
+
 
     public void updateOrderFragment() {
         TextView priceView = (TextView) getActivity().findViewById(R.id.totalPriceTextView);
@@ -59,6 +85,8 @@ public class OrderFragment extends Fragment {
                 else if (((MainActivity) getActivity()).user == MainActivity.USER_NONE) {
                     Toast toast = Toast.makeText(getActivity().getApplicationContext(), "Logg inn for å bestille.", Toast.LENGTH_SHORT);
                     toast.show();
+                } else if (((MainActivity) getActivity()).user == MainActivity.USER_TABLE) {
+                    showActivityOverlay();
                 }
                 else{
                     FragmentTransaction transaction = getFragmentManager().beginTransaction();
