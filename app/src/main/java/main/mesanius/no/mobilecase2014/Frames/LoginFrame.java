@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import main.mesanius.no.mobilecase2014.API.CallMenu;
 import main.mesanius.no.mobilecase2014.Login.LoginFragment;
 import main.mesanius.no.mobilecase2014.Login.MyPageFragment;
+import main.mesanius.no.mobilecase2014.Login.TableFragment;
 import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.Order.OrderFragment;
 import main.mesanius.no.mobilecase2014.R;
@@ -44,7 +45,7 @@ public class LoginFrame extends Fragment {
                 transaction.replace(R.id.login_frame, new MyPageFragment(), "MyPageFrag");
                 break;
             case 2:
-                transaction.replace(R.id.login_frame, new Fragment(), "TableFrag");
+                transaction.replace(R.id.login_frame, new TableFragment(), "TableFrag");
                 break;
             default:
                 transaction.replace(R.id.login_frame, new LoginFragment(), "LoginFrag");

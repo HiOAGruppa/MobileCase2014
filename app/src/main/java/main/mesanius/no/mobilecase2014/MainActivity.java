@@ -51,6 +51,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         //Oppretter og styrer ViewPager som håndterer swipes og bytte av tabs
         viewPager = (ViewPager) findViewById(R.id.pager);
         viewPager.setAdapter(new VPAdapter(getFragmentManager(), menuFrame, orderFrame, loginFrame));
+        viewPager.setOffscreenPageLimit(2);
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             //Obligatoriske metoder for ViewPager
             @Override
@@ -118,7 +119,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             orderFrame.updateFragment();
         if(tab.getPosition() == 2)
             loginFrame.updateFragment();
-            getFragmentManager().popBackStack();
+        getFragmentManager().popBackStack();
     }
 
     @Override
@@ -199,13 +200,15 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     //Onclick-Metoder
     public void login(View view){
         String userName = ((EditText)findViewById(R.id.usrName)).getText().toString();
-        if(userName.equals("Kunde")) {
+        if(userName.equals("kunde")) {
             setUser(MainActivity.USER_CUSTOMER);
             actionBar.getSelectedTab().setText("Min Side");
         }
-        else if (userName.equals("Bord"))
+        else if (userName.equals("bord")) {
             setUser(MainActivity.USER_TABLE);
-        else if (userName.equals("Kjokken")) {
+            actionBar.getSelectedTab().setText("Ditt bord");
+        }
+        else if (userName.equals("kjokken")) {
             setUser(MainActivity.USER_KITCHEN);
             goToOrders();
         }
