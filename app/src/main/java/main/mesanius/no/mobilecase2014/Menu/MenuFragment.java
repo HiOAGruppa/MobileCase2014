@@ -1,6 +1,5 @@
 package main.mesanius.no.mobilecase2014.Menu;
 
-import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.res.TypedArray;
@@ -11,9 +10,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import main.mesanius.no.mobilecase2014.API.APIManager;
+import main.mesanius.no.mobilecase2014.API.CallCompleteOrders;
 import main.mesanius.no.mobilecase2014.API.CallMenuItem;
-import main.mesanius.no.mobilecase2014.API.CallOrders;
-import main.mesanius.no.mobilecase2014.MainActivity;
+import main.mesanius.no.mobilecase2014.API.PostOrder;
 import main.mesanius.no.mobilecase2014.R;
 
 public class MenuFragment extends ListFragment {
@@ -46,9 +45,12 @@ public class MenuFragment extends ListFragment {
             menuListItems = APIManager.getMenuFromString(JSONMenu);
         }
 
-        // new PostOrder(getActivity()).execute("test");
+         new PostOrder(getActivity()).execute("test");
+
+        new CallCompleteOrders().execute();
+
         //new DeleteOrder(this.getActivity()).execute("10");
-        new CallOrders().execute();
+        //new CallOrders().execute();
 
         //original menuitemsList generation DELETE LATER
         /*
