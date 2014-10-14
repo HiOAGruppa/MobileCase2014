@@ -19,9 +19,7 @@ import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
  * A simple {@link android.app.Fragment} subclass.
  *
  */
-public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelectedListener, ItemFragment.OnHeadlineSelectedListener {
-
-    ItemFragment itemFragment;
+public class PageFrame extends Fragment {
 
     public PageFrame() {
         // Required empty public constructor
@@ -45,7 +43,6 @@ public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelect
         return view;
     }
 
-    @Override
     public void onArticleSelected(int p, MenuListItem item) {
         //setMenuText(item.getTitle());
 
@@ -76,18 +73,6 @@ public class PageFrame extends Fragment implements MenuFragment.OnHeadlineSelect
         */
 
         //ORIGINAL METHOD END
-        FragmentTransaction transaction = getFragmentManager()
-                .beginTransaction();
 
-        itemFragment = new ItemFragment();
-
-        new CallMenuItem(transaction, itemFragment).execute(String.valueOf(item.getId()));
-
-    }
-
-    @Override
-    public void returnToMenu() {
-        //setMenuText("Meny");
-        getFragmentManager().popBackStack();
     }
 }

@@ -70,9 +70,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     @Override
     public void onBackPressed() {
         if(getFragmentManager().getBackStackEntryCount() > 0)
-            pageFrame.returnToMenu();
+            getFragmentManager().popBackStack();
         else
-            super.onBackPressed();
+            finish();
     }
 
     //Obligatoriske metoder for Actionbar.Tablistener

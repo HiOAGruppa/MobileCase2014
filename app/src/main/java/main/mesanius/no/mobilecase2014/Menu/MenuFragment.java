@@ -1,6 +1,7 @@
 package main.mesanius.no.mobilecase2014.Menu;
 
 import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import main.mesanius.no.mobilecase2014.API.APIManager;
+import main.mesanius.no.mobilecase2014.API.CallMenuItem;
 import main.mesanius.no.mobilecase2014.API.CallOrders;
 import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
@@ -64,26 +66,16 @@ public class MenuFragment extends ListFragment {
 	}
 
 	@Override
-	public void onAttach(Activity activity) {
-        super.onAttach(activity);
-
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception.
-		try {
-			mCallback = ((MainActivity)activity).pageFrame;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement OnHeadlineSelectedListener");
-		}
-	}
-
-	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		// Notify the parent activity of selected item
 		MenuListItem item = menuListItems.get(position);
+        FragmentTransaction transaction = getFragmentManager()
+                .beginTransaction();
 
+        ItemFragment itemFragment = new ItemFragment();
 
-		mCallback.onArticleSelected(position, item);
+        new CallMenuItem(transaction, itemFragment).execute(String.valueOf(item.getId()));
+
 	}
 
 }
