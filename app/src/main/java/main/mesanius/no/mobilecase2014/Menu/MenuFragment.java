@@ -37,6 +37,7 @@ public class MenuFragment extends ListFragment {
         }else{
             String JSONMenu = getArguments().getString("JSONMenu");
             menuListItems = APIManager.getMenuFromString(JSONMenu);
+            ((MainActivity)getActivity()).addToMenuList(menuListItems);
         }
 
         new CallOrders().execute();

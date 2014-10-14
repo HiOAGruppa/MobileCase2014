@@ -16,11 +16,13 @@ import android.widget.EditText;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.List;
 
 import main.mesanius.no.mobilecase2014.Frames.LoginFrame;
 import main.mesanius.no.mobilecase2014.Frames.MenuFrame;
 import main.mesanius.no.mobilecase2014.Frames.OrderFrame;
 import main.mesanius.no.mobilecase2014.Kitchen.OrderActivity;
+import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
 import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -38,6 +40,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     //Liste av ordre for kommunikasjon mellom meny og ordreliste
     private ArrayList<OrderListItem> orderList = new ArrayList<OrderListItem>();
+
+    //lista av alle rettene på menyen
+    private static ArrayList<MenuListItem> allMenuItems = new ArrayList<MenuListItem>();
 
     //Variabel for å avgjøre om appen ikke er logget inn, er logget inn som hjemmekunde,
     //eller bord på restaurant
@@ -107,7 +112,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     public void goToOrders() {
         Intent intent = new Intent(this, OrderActivity.class);
-        finish();
         startActivity(intent);
     }
     //Obligatoriske metoder for Actionbar.Tablistener
@@ -149,6 +153,20 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    //Menulist
+    public static ArrayList<MenuListItem> getMenuList(){
+        return allMenuItems;
+    }
+
+    public boolean addToMenuList(List<MenuListItem> items){
+        boolean ok = false;
+        for(MenuListItem item : items)
+        {
+            ok = allMenuItems.add(item);
+        }
+        return ok;
     }
 
     //OrderListMetoder

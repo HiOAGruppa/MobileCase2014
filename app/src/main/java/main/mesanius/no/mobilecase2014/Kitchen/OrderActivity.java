@@ -10,12 +10,20 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
+import main.mesanius.no.mobilecase2014.API.APIManager;
+import main.mesanius.no.mobilecase2014.MainActivity;
+import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
+import main.mesanius.no.mobilecase2014.Order.Order;
+import main.mesanius.no.mobilecase2014.Order.OrderItem;
 import main.mesanius.no.mobilecase2014.R;
 
 public class OrderActivity extends Activity {
 	 private ListView listView;
 	 private ArrayList<OrderItemActivity> itemList = new ArrayList<OrderItemActivity>();
+    private ArrayList<MenuListItem> menuList;
 	 private boolean callKelner = true;
 	 
 	@Override
@@ -25,6 +33,9 @@ public class OrderActivity extends Activity {
 
         generateShoppingItems(itemList);
         //TextView priceView = (TextView) findViewById(R.id.priceTotalNumTextView);
+        String JSONString = getIntent().getStringExtra("");
+        //LinkedList<Order> allOrders = new LinkedList<Order>();//APIManager.g
+        menuList = MainActivity.getMenuList();
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(new OrderItemAdapter(this, itemList));
