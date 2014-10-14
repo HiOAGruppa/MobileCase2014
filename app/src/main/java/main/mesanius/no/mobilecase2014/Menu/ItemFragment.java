@@ -1,9 +1,7 @@
 package main.mesanius.no.mobilecase2014.Menu;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Fragment;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,16 +10,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DecimalFormat;
 
 import main.mesanius.no.mobilecase2014.MainActivity;
+import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 import main.mesanius.no.mobilecase2014.R;
 
 public class ItemFragment extends Fragment {
 
-    int mCurrentPosition = -1;
-    private String title, desc;
+    int id = -1;
+    private String name, desc;
     private int img;
     private double price;
 
@@ -33,36 +33,14 @@ public class ItemFragment extends Fragment {
         // the previous article selection set by onSaveInstanceState().
         // This is primarily necessary when in the two-pane layout.
         if (savedInstanceState != null) {
-
-            //VIA REST
-             /*Intent intent = getActivity().getIntent();
-
-             title = intent.getStringExtra(CallMenuItem.INTENT_NAME);
-             desc = intent.getStringExtra(CallMenuItem.INTENT_DESC);
-             price = intent.getIntExtra(CallMenuItem.INTENT_PRICE, 0);
-
-             new CallMenuItem(getActivity().getApplicationContext()).execute("1");*/
-
-            title = savedInstanceState.getString("title");
+            name = savedInstanceState.getString("title");
             desc = savedInstanceState.getString("desc");
             price = savedInstanceState.getDouble("price");
             img = savedInstanceState.getInt("image");
-            mCurrentPosition = savedInstanceState.getInt("id");
+            id = savedInstanceState.getInt("id");
         } else {
-            //VIA REST
-             /*Intent intent = getActivity().getIntent();
-
-             title = intent.getStringExtra(CallMenuItem.INTENT_NAME);
-             desc = intent.getStringExtra(CallMenuItem.INTENT_DESC);
-             price = intent.getIntExtra(CallMenuItem.INTENT_PRICE, 0);
-
-             new CallMenuItem(getActivity().getApplicationContext()).execute("1");
-
-             img = getArguments().getInt("image");
-             mCurrentPosition = getArguments().getInt("id");*/
-
-            mCurrentPosition = getArguments().getInt("id");
-            title = getArguments().getString("title");
+            id = getArguments().getInt("id");
+            name = getArguments().getString("title");
             desc = getArguments().getString("desc");
             img = getArguments().getInt("image");
             price = getArguments().getDouble("price");
@@ -80,28 +58,31 @@ public class ItemFragment extends Fragment {
     }
 
     public void updateArticleView() {
-        TextView title = (TextView) getActivity().findViewById(R.id.itemTitle);
-        title.setText(this.title);
+        final MainActivity activity = (MainActivity)getActivity();
 
-        TextView itemDesc = (TextView) getActivity().findViewById(R.id.itemDesc);
+        final TextView title = (TextView) activity.findViewById(R.id.itemTitle);
+        title.setText(name);
+
+        final TextView itemDesc = (TextView) activity.findViewById(R.id.itemDesc);
         itemDesc.setText(desc);
 
-        TextView itemPrice = (TextView) getActivity().findViewById(R.id.itemPrice);
+        TextView itemPrice = (TextView) activity.findViewById(R.id.itemPrice);
         DecimalFormat df = new DecimalFormat("#.##");
-        itemPrice.setText(df.format(price) + "kr");
+        itemPrice.setText(df.format(price) + ",-");
 
-        ImageView imgage = (ImageView) getActivity().findViewById(R.id.menuItemImage);
-        imgage.setImageResource(img);
+        ImageView image = (ImageView) activity.findViewById(R.id.menuItemImage);
+        int imgid = activity.getResources().getIdentifier("img_" + id, "drawable", activity.getPackageName());
+        image.setImageResource(imgid);
 
-        final Button order = (Button) getActivity().findViewById(R.id.itemOrderBtn);
+
+        final Button order = (Button) activity.findViewById(R.id.itemOrderBtn);
 
         order.setOnClickListener(new View.OnClickListener() {
-
-            @SuppressLint("ShowToast")
             @Override
             public void onClick(View v) {
-                //mCallback.returnToMenu();
-                Log.d("ORDER", "Order item: " + mCurrentPosition);
+                activity.addToOrderList(new OrderListItem(name, price, 1));
+                Toast toast = Toast.makeText(activity.getApplicationContext(), name + " lagt til.", Toast.LENGTH_SHORT);
+                toast.show();
             }
         });
     }
@@ -109,9 +90,9 @@ public class ItemFragment extends Fragment {
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putInt("id", mCurrentPosition);
+        outState.putInt("id", id);
         outState.putInt("img", img);
-        outState.putString("title", title);
+        outState.putString("title", name);
         outState.putString("desc", desc);
         outState.putDouble("price", price);
     }

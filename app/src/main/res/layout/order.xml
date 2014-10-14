@@ -2,8 +2,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".ShoppingCart">
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/emptyOrderTextView"
+        android:layout_width="fill_parent"
+        android:layout_height="0dp"
+        android:layout_weight="6"
+        android:gravity="center"
+        android:text="Bestillingen din er tom.\nBestill retter fra menyen!"
+        android:textSize="15dp"
+        android:visibility="gone" />
 
     <ListView
         android:id="@+id/listView"
@@ -20,7 +29,8 @@
 
 
         <LinearLayout
-            android:layout_width="fill_parent"
+            android:layout_width="300dp"
+            android:layout_gravity="center"
             android:layout_height="0dp"
             android:layout_weight="1"
             android:orientation="horizontal">
@@ -37,18 +47,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
                 android:gravity="right"
-                android:text="300 ,-"
+                android:text="0,-"
                 android:textSize="25dp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/buyButton"
-            android:layout_width="fill_parent"
-            android:layout_height="0dp"
-            android:layout_weight="2"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
             android:layout_marginTop="10dp"
+            android:background="@drawable/button_styled"
             android:gravity="center"
-            android:text="Bestill" />
+            android:text="Bestill"
+            android:textColor="@android:color/white" />
 
     </LinearLayout>
 

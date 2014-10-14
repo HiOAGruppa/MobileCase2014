@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory
+        android:title="Lyd innstillinger">
+
+        <CheckBoxPreference
+            android:key="checkbox_preference"
+            android:title="Musikk på"
+            android:summary="Velg lyd av/på" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Resturant">
+        <EditTextPreference
+            android:key="edittext_table"
+            android:title="Bord"
+            android:summary="Sett bordnummer"
+            android:dialogTitle="Sett bordnummer" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Språk">
+        <ListPreference android:title="Velg ønsket språk"
+            android:key="language"
+            android:entries="@array/language"
+            android:entryValues="@array/langVal" />
+    </PreferenceCategory>
+</PreferenceScreen>

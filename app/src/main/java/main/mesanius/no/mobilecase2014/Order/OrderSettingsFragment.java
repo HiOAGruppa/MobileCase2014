@@ -1,25 +1,22 @@
 package main.mesanius.no.mobilecase2014.Order;
 
-import java.text.DecimalFormat;
 
-
-import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.style.UpdateLayout;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Dialog;
 
+import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
 
 public class OrderSettingsFragment extends Fragment {
@@ -43,7 +40,7 @@ public class OrderSettingsFragment extends Fragment {
 
 		}
 		// Inflate the layout for this fragment
-		return inflater.inflate(R.layout.order_settings_layout, container,
+		return inflater.inflate(R.layout.order_settings, container,
 				false);
 	}
 
@@ -66,8 +63,7 @@ public class OrderSettingsFragment extends Fragment {
 
             @Override
             public void onClick(View v) {
-                //show confirm dialog
-                Toast.makeText(getActivity(),"CONFIRM?",Toast.LENGTH_SHORT);
+                showActivityOverlay();
             }
         });
 		
@@ -90,7 +86,29 @@ public class OrderSettingsFragment extends Fragment {
 			}
 		});
 	}
-	
+    private void showActivityOverlay() {
+
+        final Dialog dialog = new Dialog(getActivity(), android.R.style.Theme_Translucent_NoTitleBar);
+        dialog.setContentView(R.layout.receipt);
+
+        TextView receiptText = (TextView)dialog.findViewById(R.id.reciptString);
+        receiptText.setText(this.getReceipt());
+        receiptText.setTextColor(Color.BLACK);
+
+        final Button btn = (Button)dialog.findViewById(R.id.confirmBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //add order
+                ((MainActivity)getActivity()).clearOrderList();
+                getFragmentManager().popBackStack();
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+
+    }
 	public void changeView(boolean b)
 	{
 		if (b) {
@@ -110,26 +128,9 @@ public class OrderSettingsFragment extends Fragment {
 
 	}
 
-	/*
-	 * @Override public View onCreateView(LayoutInflater inflater, ViewGroup
-	 * container, Bundle savedInstanceState) { // set the layout you want to
-	 * display in First Fragment View view = inflater.inflate(R.layout.testfrag,
-	 * container, false); return view;
-	 * 
-	 * }
-	 */
-	@Override
-	public void onAttach(Activity activity) {
-		super.onAttach(activity);
-
-		// This makes sure that the container activity has implemented
-		// the callback interface. If not, it throws an exception.
-		try {
-			mCallback = (OnHeadlineSelectedListener) activity;
-		} catch (ClassCastException e) {
-			throw new ClassCastException(activity.toString()
-					+ " must implement OnHeadlineSelectedListener");
-		}
-	}
+    public String getReceipt()
+    {
+        return ((MainActivity)getActivity()).getToStringList();
+    }
 
 }

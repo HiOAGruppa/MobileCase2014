@@ -40,6 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
         android:text="Logg ut"
+        android:onClick="logOut"
         android:textColor="#FFF"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"

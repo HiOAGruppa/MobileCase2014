@@ -1,5 +1,6 @@
 package main.mesanius.no.mobilecase2014.Menu;
 
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.app.ListFragment;
 import android.content.res.TypedArray;
@@ -10,9 +11,9 @@ import android.widget.ListView;
 import java.util.List;
 
 import main.mesanius.no.mobilecase2014.API.APIManager;
-import main.mesanius.no.mobilecase2014.API.CallCompleteOrders;
 import main.mesanius.no.mobilecase2014.API.CallMenuItem;
-import main.mesanius.no.mobilecase2014.API.PostOrder;
+import main.mesanius.no.mobilecase2014.API.CallOrders;
+import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
 
 public class MenuFragment extends ListFragment {
@@ -23,15 +24,8 @@ public class MenuFragment extends ListFragment {
 	MenuListAdapter adapter;
 	private List<MenuListItem> menuListItems;
 
-	OnHeadlineSelectedListener mCallback;
-
     public MenuFragment() {
     }
-
-	public interface OnHeadlineSelectedListener {
-		/** Called by HeadlinesFragment when a list item is selected */
-		public void onArticleSelected(int p, MenuListItem i);
-	}
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,24 +39,8 @@ public class MenuFragment extends ListFragment {
             menuListItems = APIManager.getMenuFromString(JSONMenu);
         }
 
-         new PostOrder(getActivity()).execute("test");
+        new CallOrders().execute();
 
-        new CallCompleteOrders().execute();
-
-        //new DeleteOrder(this.getActivity()).execute("10");
-        //new CallOrders().execute();
-
-        //original menuitemsList generation DELETE LATER
-        /*
-		MenuListItems = new ArrayList<MenuListItem>();
-
-		for (int i = 0; i < menutitles.length; i++) {
-			MenuListItem items = new MenuListItem(menutitles[i], R.drawable.ic_launcher,
-					i, "En rett fra resturant menyen", 250.00);
-			
-			MenuListItems.add(items);
-		}
-        */
 		adapter = new MenuListAdapter(getActivity(), menuListItems);
 		setListAdapter(adapter);
 	}

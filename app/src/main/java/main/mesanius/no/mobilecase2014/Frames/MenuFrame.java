@@ -1,4 +1,4 @@
-package main.mesanius.no.mobilecase2014;
+package main.mesanius.no.mobilecase2014.Frames;
 
 
 import android.app.Fragment;
@@ -9,32 +9,29 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import main.mesanius.no.mobilecase2014.API.CallMenu;
+import main.mesanius.no.mobilecase2014.R;
 
 
 /**
  * A simple {@link android.app.Fragment} subclass.
  *
  */
-public class PageFrame extends Fragment {
+public class MenuFrame extends Fragment {
 
-    public PageFrame() {
+    public MenuFrame() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate PageFrame Layout som holder andre fragments
-        View view = inflater.inflate(R.layout.page_frame, container, false);
+        View view = inflater.inflate(R.layout.menu_frame, container, false);
 
         //Bytte ut det tomme Layoutet i PageFrame med MenyFragment
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         //get menu from API and generate menufragment
         new CallMenu(getActivity(), transaction).execute("menugen");
-
-        //included in CallMenu
-     //   transaction.replace(R.id.root_frame, new MenuFragment());
-      //  transaction.commit();
 
         return view;
     }
