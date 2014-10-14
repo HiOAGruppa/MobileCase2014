@@ -80,7 +80,7 @@ public class ItemFragment extends Fragment {
         order.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activity.addToOrderList(new OrderListItem(name, price, 1));
+                activity.addToOrderList(new OrderListItem(id, name, price, 1));
                 Toast toast = Toast.makeText(activity.getApplicationContext(), name + " lagt til.", Toast.LENGTH_SHORT);
                 toast.show();
             }

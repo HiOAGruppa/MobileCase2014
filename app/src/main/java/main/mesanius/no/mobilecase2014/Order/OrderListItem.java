@@ -6,16 +6,17 @@ public class OrderListItem {
     private double price;
     private int totalprice;
     private int quantity = 1;
+    private int id = -1;
 
-    public OrderListItem(String name, double price){
+    public OrderListItem(int id, String name, double price){
+        this.id = id;
         this.name = name;
-        this.description = description;
         this.price = price;
     }
 
-    public OrderListItem(String name, double price, int quantity){
+    public OrderListItem(int id, String name, double price, int quantity){
+        this.id = id;
         this.name = name;
-        this.description = description;
         this.price = price;
         this.quantity = quantity;
     }
@@ -45,5 +46,9 @@ public class OrderListItem {
             this.quantity++;
         else
             this.quantity--;
+    }
+
+    public int getId() {
+        return id;
     }
 }

@@ -11,12 +11,9 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".API.Mesanius"
-            android:label="@string/app_name" >
-        </activity>
-        <activity
             android:name=".MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -25,12 +22,14 @@
         </activity>
         <activity
             android:name=".Kitchen.OrderActivity"
-            android:label="@string/title_activity_order" >
+            android:label="@string/title_activity_order"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".Settings"
             android:label="@string/title_activity_settings"
-            android:parentActivityName=".MainActivity" >
+            android:parentActivityName=".MainActivity"
+            android:screenOrientation="portrait">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="main.mesanius.no.mobilecase2014.MainActivity" />

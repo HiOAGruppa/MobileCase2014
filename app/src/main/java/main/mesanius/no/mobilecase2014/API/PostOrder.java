@@ -13,9 +13,7 @@ public class PostOrder extends AsyncTask<Order, Void, String>{
 
     private Context context;
 
-    public PostOrder(Context context){
-        this.context = context;
-    }
+    public PostOrder(){ }
 
     @Override
     protected String doInBackground(Order... orders) {
@@ -26,6 +24,6 @@ public class PostOrder extends AsyncTask<Order, Void, String>{
 
     @Override
     protected void onPostExecute(String result) {
-        Toast.makeText(context.getApplicationContext(), result, Toast.LENGTH_LONG).show();
+
     }
 }
