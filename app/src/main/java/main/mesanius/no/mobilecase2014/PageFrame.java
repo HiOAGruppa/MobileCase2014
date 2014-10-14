@@ -9,10 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import main.mesanius.no.mobilecase2014.API.CallMenu;
-import main.mesanius.no.mobilecase2014.API.CallMenuItem;
-import main.mesanius.no.mobilecase2014.Menu.ItemFragment;
-import main.mesanius.no.mobilecase2014.Menu.MenuFragment;
-import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
 
 
 /**
@@ -34,7 +30,7 @@ public class PageFrame extends Fragment {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         //get menu from API and generate menufragment
-        new CallMenu(transaction).execute("menugen");
+        new CallMenu(getActivity(), transaction).execute("menugen");
 
         //included in CallMenu
      //   transaction.replace(R.id.root_frame, new MenuFragment());

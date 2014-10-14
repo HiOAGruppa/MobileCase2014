@@ -1,6 +1,8 @@
 package main.mesanius.no.mobilecase2014.API;
 
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 
@@ -16,9 +18,24 @@ import main.mesanius.no.mobilecase2014.R;
 public class CallMenu extends AsyncTask<String, String, String> {
 
     private FragmentTransaction fragmentTransaction;
+    private MenuFragment menuFragment;
+    private ProgressDialog progressDialog;
+    private Context context;
 
-    public CallMenu(FragmentTransaction fragmentTransaction){
+    public CallMenu(Context context, FragmentTransaction fragmentTransaction){
         this.fragmentTransaction = fragmentTransaction;
+        this.context = context;
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+
+        menuFragment = new MenuFragment();
+
+        progressDialog = new ProgressDialog(context);
+        progressDialog.setMessage("Please wait...");
+        progressDialog.show();
     }
 
     @Override
@@ -30,7 +47,6 @@ public class CallMenu extends AsyncTask<String, String, String> {
 
     @Override
     protected void onPostExecute(String menuItems) {
-        MenuFragment menuFragment = new MenuFragment();
 
         //generate bundle for start of itemfragment
         Bundle args = new Bundle();
@@ -39,6 +55,8 @@ public class CallMenu extends AsyncTask<String, String, String> {
 
         fragmentTransaction.replace(R.id.root_frame, menuFragment);
         fragmentTransaction.commit();
+
+        progressDialog.dismiss();
 
     }
 }
