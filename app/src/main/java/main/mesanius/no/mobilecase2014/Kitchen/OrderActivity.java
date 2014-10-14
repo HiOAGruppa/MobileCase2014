@@ -21,35 +21,38 @@ import main.mesanius.no.mobilecase2014.Order.OrderItem;
 import main.mesanius.no.mobilecase2014.R;
 
 public class OrderActivity extends Activity {
-	 private ListView listView;
-	 private ArrayList<OrderItemActivity> itemList = new ArrayList<OrderItemActivity>();
+	private ListView listView;
+	private ArrayList<OrderItemActivity> itemList;
     private ArrayList<MenuListItem> menuList;
-	 private boolean callKelner = true;
+    private List<Order> orders;
+	private boolean call = true;
 	 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_order);
 
-      //  HALLO FÅ EXTRA STRINGEN SOM HETER ORDERS();
-
-       // String HALLO = "HALLO";
-        //List<Order> order = APIManager.getAllOrdersFromString(HALLO);
-
-        //GJØR TING MED ORDERS
-
-        generateShoppingItems(itemList);
+        String JSONString = getIntent().getStringExtra("orders");
+        orders = APIManager.getAllOrdersFromString(JSONString);
         //TextView priceView = (TextView) findViewById(R.id.priceTotalNumTextView);
-        String JSONString = getIntent().getStringExtra("");
+
         //LinkedList<Order> allOrders = new LinkedList<Order>();//APIManager.g
+        Order testOrder = new Order(3,0);
+        testOrder.addOrderItem(new OrderItem(3,2));
+        testOrder.addOrderItem(new OrderItem(6,2));
+        orders.add(testOrder);
+
         menuList = MainActivity.getMenuList();
+
+        itemList = generateShoppingItems();
 
         listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(new OrderItemAdapter(this, itemList));
-        
-        
+
+
+
         final LinearLayout callScreen = (LinearLayout)findViewById(R.id.kelnerNeeded);
-        if(callKelner)
+        if(call)  //when table presses "service"
         	callScreen.setVisibility(View.VISIBLE);
         
         Button button = (Button) findViewById(R.id.removeCall);
@@ -61,18 +64,44 @@ public class OrderActivity extends Activity {
         });
 	}
 
-	private void generateShoppingItems(ArrayList<OrderItemActivity> items){
+    //converts orders to orderItemActivity
+	private ArrayList<OrderItemActivity> generateShoppingItems(){
 
-        for(int i = 0; i < 2; i++)
-            items.add(new OrderItemActivity(i,"Order 2", "Boller\n Nisser \n annet", 2));
-        items.add(new OrderItemActivity(2,"Order 4", "Boller\n Nisser \n annet", 0,4));
-        for(int i = 3; i < 6; i++)
-        {
-            OrderItemActivity item = new OrderItemActivity(i,"Order 1", "Boller\n Nisser \n annet\n annet\n annet", 1);
-        	item.setTableId(5);
-        	items.add(item);
+        ArrayList<OrderItemActivity> listOfItems = new ArrayList<OrderItemActivity>();
+
+        OrderItemActivity itemForList = new OrderItemActivity(1,"Order 1", "Pizza:3\nBoller:1", 1);
+        itemForList.setTableId(5);
+
+        //to test-orders for orders from users and tables
+        listOfItems.add(itemForList);//order from a table
+        listOfItems.add(new OrderItemActivity(2,"Order 2", "Biff:2", 0,4));//order from an user(id:5)
+
+        String desc = "";
+
+        for(Order order : orders)
+        {     //finds the name of all the items in an order
+              for(OrderItem singleItem: order.getOrderItems())
+              {
+                  MenuListItem menuItem = getMenuItem(singleItem.getItemId());
+                  desc+= menuItem.getTitle() + ": "+ singleItem.getQuantity()+ "\n";
+              }
+              OrderItemActivity orderItem = new OrderItemActivity(order.getOrderId(),"Order " +
+              order.getOrderId(), desc,2); // all is get-at store
+            listOfItems.add(orderItem);
         }
+        return listOfItems;
     }
+
+    public MenuListItem getMenuItem(int id)
+    {
+        for(MenuListItem item : menuList)
+        {
+            if(item.getId()==id)
+                return item;
+        }
+        return null;
+    }
+
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
