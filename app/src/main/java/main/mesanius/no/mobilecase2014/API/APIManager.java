@@ -24,6 +24,7 @@ import java.util.Scanner;
 
 import main.mesanius.no.mobilecase2014.Menu.MenuItem;
 import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
+import main.mesanius.no.mobilecase2014.Order.Order;
 import main.mesanius.no.mobilecase2014.Order.OrderItem;
 
 /**
@@ -31,9 +32,7 @@ import main.mesanius.no.mobilecase2014.Order.OrderItem;
  */
 public class APIManager {
 
-    public final static String INTENT_MESSAGE = "intentmessagefinal";
-
-    public final static String apiURL = "http://10.0.2.2:8080/rest/";
+    public final static String apiURL = "http://localhost:8080/rest/";
     private Context context;
 
 
@@ -51,7 +50,7 @@ public class APIManager {
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
 
             urlConnection.setReadTimeout(100000);
-            urlConnection.setConnectTimeout(150000);
+            urlConnection.setConnectTimeout(500000);
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
 
@@ -89,10 +88,11 @@ public class APIManager {
             urlConnection.setConnectTimeout(500000);
             urlConnection.setRequestMethod("GET");
             urlConnection.setDoInput(true);
-            callMenu.sendProgress(50);
+            callMenu.sendProgress(25);
             urlConnection.connect();
 
             in = urlConnection.getInputStream();
+            callMenu.sendProgress(50);
             String data = convertStreamToString(in);
             callMenu.sendProgress(70);
             Log.d("JSONdata.raw", data);
@@ -126,6 +126,7 @@ public class APIManager {
             jsonObject.accumulate("quantity", order.getQuantity());
             jsonObject.accumulate("item", order.getItemId());
 
+
             jsonData = jsonObject.toString();
 
             Log.d("HttpPost.Jsondata", jsonData);
@@ -155,6 +156,62 @@ public class APIManager {
         return result;
     }
 
+    public static String sendCompleteOrderJSON(Order order){
+        InputStream in = null;
+        String result = "";
+
+        String urlString = apiURL + "completeorder";
+
+        try{
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(urlString);
+
+            String jsonData = "";
+
+
+            JSONObject jsonObject = new JSONObject();
+
+            JSONArray orderItems = new JSONArray();
+
+            for(OrderItem item : order.getOrderItems()){
+                JSONObject itemObject = new JSONObject();
+                itemObject.accumulate("item", item.getItemId());
+                itemObject.accumulate("quantity", item.getQuantity());
+
+                orderItems.put(itemObject);
+            }
+            jsonObject.accumulate("items", orderItems);
+
+            jsonData = jsonObject.toString();
+
+            Log.d("HttpPost.Jsondata", jsonData);
+
+            StringEntity se = new StringEntity(jsonData);
+
+            httpPost.setEntity(se);
+
+            httpPost.setHeader("Accept", "application/json");
+            httpPost.setHeader("Content-type", "application/json");
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+
+            in = httpResponse.getEntity().getContent();
+            if(in != null){
+                result = convertPostStreamToString(in);
+                Log.d("httppost.result", result);
+                //result = convertStreamToString(in);
+            }else{
+                result = "Post did not work";
+            }
+            in.close();
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+
     public static boolean deleteOrder(int orderId){
         String urlString = apiURL + "order/" + orderId;
         InputStream in = null;
@@ -176,6 +233,95 @@ public class APIManager {
 
         return false;
     }
+
+    public static boolean deleteCompleteOrder(int orderId){
+        String urlString = apiURL + "completeorder/" + orderId;
+        InputStream in = null;
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpDelete httpDelete = new HttpDelete(urlString);
+            HttpResponse httpResponse = httpClient.execute(httpDelete);
+
+            in = httpResponse.getEntity().getContent();
+            if(in != null){
+                Log.d("httpdelete", convertPostStreamToString(in));
+                in.close();
+                return true;
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+
+    public static List<Order> getAllOrdersFromString(String JSONstring){
+        List<Order> allOrders = new ArrayList<Order>();
+        try {
+            JSONArray completeArray = new JSONArray(JSONstring);
+            for(int i = 0; i<completeArray.length(); i++){
+                JSONObject oneOrder = completeArray.getJSONObject(i);
+                allOrders.add(getOrderFromJSON(oneOrder));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return allOrders;
+    }
+
+
+    public static Order getOrderFromJSON(JSONObject jsonorder){
+        Order order = new Order();
+        try{
+
+
+            JSONArray itemArray = jsonorder.getJSONArray("items");
+            int orderId = Integer.parseInt(jsonorder.getString("orderId"));
+
+
+            for(int i = 0; i < itemArray.length();i++){
+                JSONObject orderJson = itemArray.getJSONObject(i);
+
+                OrderItem orderItem = new OrderItem(orderJson.getInt("item"), orderJson.getInt("quantity"));
+                order.addOrderItem(orderItem);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+
+        return order;
+    }
+
+    public static Order getOrderFromString(String JSONstring){
+        Order order = new Order();
+        try{
+
+            JSONObject reader = new JSONObject(JSONstring);
+            JSONArray itemArray = reader.getJSONArray("items");
+            int orderId = Integer.parseInt(reader.getString("orderId"));
+
+
+            for(int i = 0; i < itemArray.length();i++){
+                JSONObject orderJson = itemArray.getJSONObject(i);
+
+                OrderItem orderItem = new OrderItem(orderJson.getInt("item"), orderJson.getInt("quantity"));
+                order.addOrderItem(orderItem);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+
+        return order;
+    }
+
 
 
     //converts our inputstream to a JSON-string
@@ -243,6 +389,18 @@ public class APIManager {
 
             return new MenuListItem(id, price, name);
         }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static OrderItem getOrderItemFromJSON(JSONObject reader){
+        try{
+            int id = Integer.parseInt(reader.getString("item"));
+            int quantity = Integer.parseInt(reader.getString("quantity"));
+
+            return new OrderItem(id, quantity);
+        }catch(Exception e){
             e.printStackTrace();
         }
         return null;
