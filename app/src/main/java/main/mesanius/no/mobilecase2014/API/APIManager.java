@@ -257,6 +257,46 @@ public class APIManager {
     }
 
 
+    public static List<Order> getAllOrdersFromString(String JSONstring){
+        List<Order> allOrders = new ArrayList<Order>();
+        try {
+            JSONArray completeArray = new JSONArray(JSONstring);
+            for(int i = 0; i<completeArray.length(); i++){
+                JSONObject oneOrder = completeArray.getJSONObject(i);
+                allOrders.add(getOrderFromJSON(oneOrder));
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return allOrders;
+    }
+
+
+    public static Order getOrderFromJSON(JSONObject jsonorder){
+        Order order = new Order();
+        try{
+
+
+            JSONArray itemArray = jsonorder.getJSONArray("items");
+            int orderId = Integer.parseInt(jsonorder.getString("orderId"));
+
+
+            for(int i = 0; i < itemArray.length();i++){
+                JSONObject orderJson = itemArray.getJSONObject(i);
+
+                OrderItem orderItem = new OrderItem(orderJson.getInt("item"), orderJson.getInt("quantity"));
+                order.addOrderItem(orderItem);
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+
+        }
+
+
+        return order;
+    }
+
     public static Order getOrderFromString(String JSONstring){
         Order order = new Order();
         try{

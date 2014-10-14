@@ -17,10 +17,10 @@ import android.widget.EditText;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import main.mesanius.no.mobilecase2014.API.CallCompleteOrders;
 import main.mesanius.no.mobilecase2014.Frames.LoginFrame;
 import main.mesanius.no.mobilecase2014.Frames.MenuFrame;
 import main.mesanius.no.mobilecase2014.Frames.OrderFrame;
-import main.mesanius.no.mobilecase2014.Kitchen.OrderActivity;
 import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -106,9 +106,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     }
 
     public void goToOrders() {
-        Intent intent = new Intent(this, OrderActivity.class);
-        finish();
-        startActivity(intent);
+        new CallCompleteOrders(this).execute();
     }
     //Obligatoriske metoder for Actionbar.Tablistener
     @Override
