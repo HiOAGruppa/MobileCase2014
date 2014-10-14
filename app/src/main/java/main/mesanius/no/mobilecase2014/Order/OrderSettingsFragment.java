@@ -5,8 +5,9 @@ import java.text.DecimalFormat;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
+import android.app.Fragment;
 import android.text.style.UpdateLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,12 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.app.Dialog;
 
+import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
 
 public class OrderSettingsFragment extends Fragment {
@@ -90,7 +94,33 @@ public class OrderSettingsFragment extends Fragment {
 			}
 		});
 	}
-	
+    private void showActivityOverlay() {
+        final Dialog dialog = new Dialog(getActivity(),
+                android.R.style.Theme_Translucent_NoTitleBar);
+
+        dialog.setContentView(R.layout.receipt_layout);
+
+        RelativeLayout layout = (RelativeLayout) dialog
+                .findViewById(R.id.dialogLayout);
+        layout.setBackgroundColor(Color.TRANSPARENT);
+        TextView receiptText = (TextView)dialog.findViewById(R.id.reciptString);
+
+
+        receiptText.setText(this.getReceipt());
+        final Button btn = (Button)dialog.findViewById(R.id.confirmBtn);
+        btn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                //add order
+                dialog.dismiss();
+
+            }
+        });
+
+        dialog.show();
+
+    }
 	public void changeView(boolean b)
 	{
 		if (b) {
@@ -109,6 +139,11 @@ public class OrderSettingsFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 
 	}
+
+    public String getReceipt()
+    {
+        return ((MainActivity)getActivity()).getToStringList();
+    }
 
 	/*
 	 * @Override public View onCreateView(LayoutInflater inflater, ViewGroup

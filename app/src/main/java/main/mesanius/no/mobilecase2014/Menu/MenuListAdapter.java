@@ -16,12 +16,13 @@ import main.mesanius.no.mobilecase2014.R;
 
 public class MenuListAdapter extends BaseAdapter {
 
-    Context context;
-    List<MenuListItem> menuListItem;
+    private Context context;
+    private List<MenuListItem> menuListItem;
 
     MenuListAdapter(Context context, List<MenuListItem> menuListItem) {
         this.context = context;
         this.menuListItem = menuListItem;
+        updateImageId();
     }
 
     @Override
@@ -40,6 +41,13 @@ public class MenuListAdapter extends BaseAdapter {
     public long getItemId(int position) {
 
         return menuListItem.indexOf(getItem(position));
+    }
+
+    private void updateImageId() {
+        for(MenuListItem item : menuListItem) {
+            int resid = context.getResources().getIdentifier("img_" + item.getId(), "drawable", context.getPackageName());
+            item.setIcon(resid);
+        }
     }
 
     @Override
