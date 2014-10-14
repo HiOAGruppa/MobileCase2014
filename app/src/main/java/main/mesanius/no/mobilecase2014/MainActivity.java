@@ -8,11 +8,15 @@ import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+
 import main.mesanius.no.mobilecase2014.Login.LoginFragment;
 import main.mesanius.no.mobilecase2014.Order.OrderFragment;
+import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
@@ -21,7 +25,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     private ActionBar actionBar;
 
     //FrameLayout som fungerer som container for andre fragments
-    public PageFrame pageFrame = new PageFrame();
+    public MenuFrame menuFrame = new MenuFrame();
+    public OrderFrame orderFrame = new OrderFrame();
+
+    private ArrayList<OrderListItem> orderList = new ArrayList<OrderListItem>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +37,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         //Oppretter og styrer ViewPager som håndterer swipes og bytte av tabs
         viewPager = (ViewPager) findViewById(R.id.pager);
-        viewPager.setAdapter(new VPAdapter(getFragmentManager(), pageFrame));
+        viewPager.setAdapter(new VPAdapter(getFragmentManager(), menuFrame, orderFrame));
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             //Obligatoriske metoder for ViewPager
             @Override
@@ -64,7 +71,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                         .setText(getString(R.string.title_section3))
                         .setTabListener(this)
         );
-
     }
 
     @Override
@@ -80,6 +86,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
         viewPager.setCurrentItem(tab.getPosition());
         getFragmentManager().popBackStack();
+        if(tab.getPosition() == 1)
+            getFragmentManager().findFragmentByTag("OrderFrag").onResume();
     }
 
     @Override
@@ -89,7 +97,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     @Override
     public void onTabReselected(ActionBar.Tab tab, FragmentTransaction ft) {
-
+        getFragmentManager().popBackStack();
     }
 
     @Override
@@ -111,15 +119,41 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         return super.onOptionsItemSelected(item);
     }
 
+    public ArrayList<OrderListItem> getOrderList(){
+        return orderList;
+    }
+
+    public boolean addToOrderList(OrderListItem item){
+        Log.d("Added orderItem: ", item.getName());
+        for (OrderListItem i: orderList) {
+            if (i.getName().equals(item.getName())){
+                i.incrementQuantity();
+                return true;
+            }
+        }
+        return orderList.add(item);
+
+    }
+
+    public boolean removeFromOrderList(OrderListItem item){
+        return orderList.remove(item);
+    }
+
+
+    public void clearOrderList(){
+        orderList.clear();
+    }
 }
 
 //Custom ViewPager adapter. Styrer veksling mellom fragmenter ved swipe eller klikk på tab
 class VPAdapter extends FragmentPagerAdapter {
-    PageFrame frame;
+    MenuFrame menuFrame;
+    OrderFrame orderFrame;
 
-    public VPAdapter(FragmentManager fm, PageFrame pageFrame) {
+    public VPAdapter(FragmentManager fm, MenuFrame menuFrame, OrderFrame orderFrame) {
         super(fm);
-        frame = pageFrame;
+        this.menuFrame = menuFrame;
+        this.orderFrame = orderFrame;
     }
 
     //Velger fragment ved swipe (implementert i Tablistener for å også kjøre ved valg av tab)
@@ -129,13 +163,13 @@ class VPAdapter extends FragmentPagerAdapter {
 
         switch (i) {
             case 1:
-                fragment = new OrderFragment();
+                fragment = orderFrame;
                 break;
             case 2:
                 fragment = new LoginFragment();
                 break;
             default:
-                fragment = frame;
+                fragment = menuFrame;
         }
         return fragment;
     }

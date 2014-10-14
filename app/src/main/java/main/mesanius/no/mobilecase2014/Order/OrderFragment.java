@@ -1,7 +1,9 @@
 package main.mesanius.no.mobilecase2014.Order;
 
 import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.Order.OrderAdapter;
 import main.mesanius.no.mobilecase2014.Order.OrderItem;
 import main.mesanius.no.mobilecase2014.R;
@@ -19,31 +22,24 @@ import main.mesanius.no.mobilecase2014.R;
 public class OrderFragment extends Fragment{
 	
 	private ListView listView;
-    private ArrayList<OrderItem> itemList = new ArrayList<OrderItem>();
+    private ArrayList<OrderListItem> itemList = new ArrayList<OrderListItem>();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 
-		// If activity recreated (such as from screen rotate), restore
-		// the previous article selection set by onSaveInstanceState().
-		// This is primarily necessary when in the two-pane layout.
-		 if (savedInstanceState != null) {
-			 generateShoppingItems(itemList);
-	     }
-		 else{
-			 generateShoppingItems(itemList);
-		 }
-		// Inflate the layout for this fragment
+        itemList = ((MainActivity)getActivity()).getOrderList();
+
+        // Inflate the layout for this fragment
 		return inflater.inflate(R.layout.order, container, false);
 	}
 
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        updateArticleView();
+    }
 
-		super.onActivityCreated(savedInstanceState);
-		updateArticleView();
-
-	}
 
 	public void updateArticleView() {
 		TextView priceView = (TextView) getActivity().findViewById(R.id.totalPriceTextView);
@@ -55,24 +51,29 @@ public class OrderFragment extends Fragment{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Woho, purchase
+                ((OrderAdapter)listView.getAdapter()).notifyDataSetChanged();
             }
         });
 	}
 
-	@Override
-	public void onSaveInstanceState(Bundle outState) {
-		super.onSaveInstanceState(outState);
-		 
-	}
-	
 
-    private void generateShoppingItems(ArrayList<OrderItem> items){
-        String[] names = {"Meatballs", "Pasta", "Pizza", "Fish", "French Fries", "Stuff"};
-        int[] price = {130, 120, 149, 180, 79, 99};
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(itemList.size() == 0) {
+            getActivity().findViewById(R.id.listView).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.emptyOrderTextView).setVisibility(View.VISIBLE);
+        }
+        else {
+            getActivity().findViewById(R.id.listView).setVisibility(View.VISIBLE);
+            getActivity().findViewById(R.id.emptyOrderTextView).setVisibility(View.GONE);
+        }
 
-        for(int i = 0; i < price.length; i++)
-            items.add(new OrderItem(i, 1));
+        updateArticleView();
     }
 
+    @Override
+	public void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+	}
 }
