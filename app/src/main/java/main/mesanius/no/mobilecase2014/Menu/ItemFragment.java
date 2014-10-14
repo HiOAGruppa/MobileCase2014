@@ -68,7 +68,8 @@ public class ItemFragment extends Fragment {
         itemPrice.setText(df.format(price) + ",-");
 
         ImageView image = (ImageView) getActivity().findViewById(R.id.menuItemImage);
-        image.setImageResource(img);
+        int imgid = getActivity().getResources().getIdentifier("img_" + id, "drawable", getActivity().getPackageName());
+        image.setImageResource(imgid);
 
 
         final Button order = (Button) getActivity().findViewById(R.id.itemOrderBtn);
