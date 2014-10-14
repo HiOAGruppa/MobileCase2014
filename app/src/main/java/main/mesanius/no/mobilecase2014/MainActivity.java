@@ -5,13 +5,16 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.EditText;
 
 import java.text.DecimalFormat;
@@ -19,10 +22,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import main.mesanius.no.mobilecase2014.API.CallCompleteOrders;
+import main.mesanius.no.mobilecase2014.API.CallImages;
 import main.mesanius.no.mobilecase2014.Frames.LoginFrame;
 import main.mesanius.no.mobilecase2014.Frames.MenuFrame;
 import main.mesanius.no.mobilecase2014.Frames.OrderFrame;
 import main.mesanius.no.mobilecase2014.Kitchen.OrderActivity;
+import main.mesanius.no.mobilecase2014.Menu.MenuFragment;
 import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
 import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 
@@ -44,6 +49,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     //lista av alle rettene på menyen
     private static ArrayList<MenuListItem> allMenuItems = new ArrayList<MenuListItem>();
+
+    private static ArrayList<Bitmap> images = new ArrayList<Bitmap>();
+
+    private static MenuFragment menufragment;
 
     //Variabel for å avgjøre om appen ikke er logget inn, er logget inn som hjemmekunde,
     //eller bord på restaurant
@@ -91,6 +100,18 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
                         .setText(getString(R.string.title_section3))
                         .setTabListener(this)
         );
+    }
+
+    public void saveImages(ArrayList<Bitmap> images) {
+        for(int i = 0; i < images.size(); i++) {
+            allMenuItems.get(i).setBitmap(images.get(i));
+        }
+        menufragment.notifyChange();
+        Log.d("Meny", allMenuItems.size() + "");
+    }
+
+    public void setMenuFragment(MenuFragment menufragment) {
+        this.menufragment = menufragment;
     }
 
     public int setUser(int user) {
@@ -167,6 +188,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         {
             ok = allMenuItems.add(item);
         }
+        new CallImages(this, allMenuItems.size()).execute();
+        //menufragment.notifyChange();
         return ok;
     }
 

@@ -1,11 +1,14 @@
 package main.mesanius.no.mobilecase2014.Menu;
 
+import android.graphics.Bitmap;
+
 import main.mesanius.no.mobilecase2014.R;
 
 public class MenuListItem {
 
     private String title;
     private int icon;
+    private Bitmap bitmap;
     private double price;
     private int id; 
     private String desc;
@@ -40,6 +43,14 @@ public class MenuListItem {
 
     public void setIcon(int icon) {
         this.icon = icon;
+    }
+
+    public void setBitmap(Bitmap image) {
+        bitmap = image;
+    }
+
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
 	public double getPrice() {

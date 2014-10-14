@@ -66,7 +66,8 @@ public class MenuListAdapter extends BaseAdapter {
         MenuListItem row_pos = menuListItem.get(position);
         
         // setting the image resource and title
-        imgIcon.setImageResource(row_pos.getIcon());
+        //imgIcon.setImageResource(row_pos.getIcon());
+        imgIcon.setImageBitmap(row_pos.getBitmap());
         txtTitle.setText(row_pos.getTitle());
         
         //NumberFormat formatter = NumberFormat.getCurrencyInstance();

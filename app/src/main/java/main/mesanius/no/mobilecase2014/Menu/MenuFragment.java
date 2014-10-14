@@ -42,6 +42,7 @@ public class MenuFragment extends ListFragment {
 
 		adapter = new MenuListAdapter(getActivity(), menuListItems);
 		setListAdapter(adapter);
+        ((MainActivity)getActivity()).setMenuFragment(this);
 	}
 
 	@Override
@@ -56,4 +57,8 @@ public class MenuFragment extends ListFragment {
 
         new CallMenuItem(transaction, itemFragment).execute(String.valueOf(item.getId()));
 	}
+
+    public void notifyChange() {
+        adapter.notifyDataSetChanged();
+    }
 }
