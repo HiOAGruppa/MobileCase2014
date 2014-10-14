@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 import main.mesanius.no.mobilecase2014.Login.LoginFragment;
@@ -137,6 +138,23 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
     public boolean removeFromOrderList(OrderListItem item){
         return orderList.remove(item);
+    }
+
+    public String getToStringList()
+    {
+        StringBuilder outString = new StringBuilder();
+        double price = 0;
+
+        for(OrderListItem item: orderList)
+        {
+            outString.append(item.getName()).append("\t").append(item.getQuantity())
+                    .append("\t").append(item.getPrice()).append("kr\n");
+            price +=item.getPrice();
+        }
+        DecimalFormat df = new DecimalFormat("#.##");
+        outString.append("\n\n").append("Totalt:\t\t\t").append(df.format(price)).append("kr");
+
+        return outString.toString();
     }
 
 

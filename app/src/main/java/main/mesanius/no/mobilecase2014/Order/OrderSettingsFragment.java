@@ -104,7 +104,9 @@ public class OrderSettingsFragment extends Fragment {
                 .findViewById(R.id.dialogLayout);
         layout.setBackgroundColor(Color.TRANSPARENT);
         TextView receiptText = (TextView)dialog.findViewById(R.id.reciptString);
-        receiptText.setText("KVITTERING");
+
+
+        receiptText.setText(this.getReceipt());
         final Button btn = (Button)dialog.findViewById(R.id.confirmBtn);
         btn.setOnClickListener(new View.OnClickListener() {
 
@@ -137,6 +139,11 @@ public class OrderSettingsFragment extends Fragment {
 		super.onSaveInstanceState(outState);
 
 	}
+
+    public String getReceipt()
+    {
+        return ((MainActivity)getActivity()).getToStringList();
+    }
 
 	/*
 	 * @Override public View onCreateView(LayoutInflater inflater, ViewGroup

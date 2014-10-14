@@ -9,7 +9,7 @@
         android:layout_height="350dp"
         android:layout_centerInParent="true"
         android:background="@drawable/insbg"
-        android:id="@+id/">
+        android:id="@+id/mainWrapper">
 
         <TextView
             android:layout_width="wrap_content"
