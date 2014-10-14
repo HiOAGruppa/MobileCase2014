@@ -38,7 +38,7 @@ public class OrderAdapter extends BaseAdapter{
 
     public void updateTotalPrice() {
         getTotalPrice();
-        totalPriceTextView.setText(totalPrice + " ,-");
+        totalPriceTextView.setText(totalPrice + ",-");
     }
 
     @Override
@@ -68,7 +68,7 @@ public class OrderAdapter extends BaseAdapter{
             data.add(item);
         }
         else {
-            oldItem.incrementQuantity(true, item.getQuantity());
+            oldItem.setQuantity(true);
         }
 
         notifyDataSetChanged();
@@ -78,10 +78,12 @@ public class OrderAdapter extends BaseAdapter{
     public void updateRowItem(View view, boolean increment) {
         Button b = (Button) view;
         OrderListItem item = getItem(b.getTag().toString());
-        item.incrementQuantity(increment);
+        item.setQuantity(increment);
 
         if(item.getQuantity() == 0)
             data.remove(item);
+        if(data.isEmpty());
+            //Vis tom-melding
 
         notifyDataSetChanged();
         updateTotalPrice();
@@ -93,13 +95,12 @@ public class OrderAdapter extends BaseAdapter{
         if (vi == null)
             vi = inflater.inflate(R.layout.order_item, null);
 
-        Log.d("Her", "Er i getview");
         TextView textname = (TextView) vi.findViewById(R.id.itemNameTextView);
         textname.setText(data.get(position).getName());
         TextView textprice = (TextView) vi.findViewById(R.id.priceTextView);
-        textprice.setText(data.get(position).getTotalPrice()+" ,-");
+        textprice.setText(data.get(position).getTotalPrice()+",-");
         TextView textquan = (TextView) vi.findViewById(R.id.quantityTextView);
-        textquan.setText(data.get(position).getQuantity()+"");
+        textquan.setText(data.get(position).getQuantity()+"stk");
 
         updateTotalPrice();
 

@@ -40,23 +40,10 @@ public class OrderListItem {
         return quantity;
     }
 
-    public void incrementQuantity (boolean inc, int num){
-        for(int i = 0; i < num; i++) {
-            incrementQuantity(inc);
-        }
-    }
-
-    public void incrementQuantity() {
-        quantity++;
-    }
-
-    public void decrementQuantity() {
-        if(quantity < 1) quantity = 0;
-        else quantity--;
-    }
-
-    public void incrementQuantity(boolean inc) {
-        if(inc) quantity++;
-        else if(quantity > 0) quantity--;
+    public void setQuantity(boolean increment) {
+        if (increment)
+            this.quantity++;
+        else
+            this.quantity--;
     }
 }

@@ -46,21 +46,8 @@ public class MenuFragment extends ListFragment {
             menuListItems = APIManager.getMenuFromString(JSONMenu);
         }
 
-        // new PostOrder(getActivity()).execute("test");
-        //new DeleteOrder(this.getActivity()).execute("10");
         new CallOrders().execute();
 
-        //original menuitemsList generation DELETE LATER
-        /*
-		MenuListItems = new ArrayList<MenuListItem>();
-
-		for (int i = 0; i < menutitles.length; i++) {
-			MenuListItem items = new MenuListItem(menutitles[i], R.drawable.ic_launcher,
-					i, "En rett fra resturant menyen", 250.00);
-			
-			MenuListItems.add(items);
-		}
-        */
 		adapter = new MenuListAdapter(getActivity(), menuListItems);
 		setListAdapter(adapter);
 	}

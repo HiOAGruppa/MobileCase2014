@@ -1,9 +1,7 @@
 package main.mesanius.no.mobilecase2014.Order;
 
 import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,8 +12,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import main.mesanius.no.mobilecase2014.MainActivity;
-import main.mesanius.no.mobilecase2014.Order.OrderAdapter;
-import main.mesanius.no.mobilecase2014.Order.OrderItem;
 import main.mesanius.no.mobilecase2014.R;
 
 
@@ -37,11 +33,11 @@ public class OrderFragment extends Fragment{
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        updateArticleView();
+        updateOrderFragment();
     }
 
 
-	public void updateArticleView() {
+	public void updateOrderFragment() {
 		TextView priceView = (TextView) getActivity().findViewById(R.id.totalPriceTextView);
 
         listView = (ListView) getActivity().findViewById(R.id.listView);
@@ -51,16 +47,12 @@ public class OrderFragment extends Fragment{
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((OrderAdapter)listView.getAdapter()).notifyDataSetChanged();
+                ((MainActivity)getActivity()).clearOrderList();
+                updateOrderFragment();
             }
         });
-	}
 
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if(itemList.size() == 0) {
+        if(itemList.isEmpty()) {
             getActivity().findViewById(R.id.listView).setVisibility(View.GONE);
             getActivity().findViewById(R.id.emptyOrderTextView).setVisibility(View.VISIBLE);
         }
@@ -68,8 +60,13 @@ public class OrderFragment extends Fragment{
             getActivity().findViewById(R.id.listView).setVisibility(View.VISIBLE);
             getActivity().findViewById(R.id.emptyOrderTextView).setVisibility(View.GONE);
         }
+	}
 
-        updateArticleView();
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateOrderFragment();
     }
 
     @Override
