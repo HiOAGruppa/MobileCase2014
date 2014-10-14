@@ -29,6 +29,8 @@ import main.mesanius.no.mobilecase2014.Frames.OrderFrame;
 import main.mesanius.no.mobilecase2014.Kitchen.OrderActivity;
 import main.mesanius.no.mobilecase2014.Menu.MenuFragment;
 import main.mesanius.no.mobilecase2014.Menu.MenuListItem;
+import main.mesanius.no.mobilecase2014.Order.Order;
+import main.mesanius.no.mobilecase2014.Order.OrderItem;
 import main.mesanius.no.mobilecase2014.Order.OrderListItem;
 
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
@@ -62,6 +64,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        allMenuItems.clear();
 
         //Oppretter og styrer ViewPager som håndterer swipes og bytte av tabs
         viewPager = (ViewPager) findViewById(R.id.pager);
@@ -207,6 +211,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         }
         return orderList.add(item);
 
+    }
+
+    public Order convertOrder(){
+        Order order = new Order();
+        for(OrderListItem oli: orderList){
+            OrderItem item = new OrderItem(oli.getId(), oli.getQuantity());
+            order.addOrderItem(item);
+        }
+        clearOrderList();
+        return order;
     }
 
     public boolean removeFromOrderList(OrderListItem item){

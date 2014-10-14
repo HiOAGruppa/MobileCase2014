@@ -16,17 +16,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.app.Dialog;
 
+import main.mesanius.no.mobilecase2014.API.PostOrder;
 import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
 
 public class OrderSettingsFragment extends Fragment {
-	OnHeadlineSelectedListener mCallback;
 	LinearLayout home, rest;
-
-	public interface OnHeadlineSelectedListener {
-		/** Called by HeadlinesFragment when a list item is selected */
-		public void payAndConfirm();
-	}
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -101,7 +96,7 @@ public class OrderSettingsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //add order
-                ((MainActivity)getActivity()).clearOrderList();
+                new PostOrder().execute(((MainActivity) getActivity()).convertOrder());
                 getFragmentManager().popBackStack();
                 dialog.dismiss();
             }

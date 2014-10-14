@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+import main.mesanius.no.mobilecase2014.API.PostOrder;
 import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.Menu.ItemFragment;
 import main.mesanius.no.mobilecase2014.R;
@@ -58,7 +59,7 @@ public class OrderFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //add order
-                ((MainActivity)getActivity()).clearOrderList();
+                new PostOrder().execute(((MainActivity)getActivity()).convertOrder());
                 updateOrderFragment();
                 dialog.dismiss();
             }
