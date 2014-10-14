@@ -83,6 +83,13 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             finish();
     }
 
+
+    public void goToSettings() {
+        Intent intent = new Intent(this, Settings.class);
+        finish();
+        startActivity(intent);
+    }
+
     public void goToOrders() {
         Intent intent = new Intent(this, OrderActivity.class);
         finish();
@@ -121,7 +128,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
-            goToOrders();
+            goToSettings();
             return true;
         }
         return super.onOptionsItemSelected(item);
