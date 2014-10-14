@@ -32,7 +32,7 @@ import main.mesanius.no.mobilecase2014.Order.OrderItem;
  */
 public class APIManager {
 
-    public final static String apiURL = "http://localhost:8080/rest/";
+    public final static String apiURL = "http://10.0.2.2:8080/rest/";
     private Context context;
 
 

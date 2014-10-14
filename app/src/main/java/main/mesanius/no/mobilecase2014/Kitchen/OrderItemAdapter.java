@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
+import main.mesanius.no.mobilecase2014.API.DeleteOrder;
 import main.mesanius.no.mobilecase2014.R;
 
 
@@ -33,7 +35,7 @@ public class OrderItemAdapter extends BaseAdapter{
         	return null;
         final OrderItemActivity item = data.get(position);
         
-        TextView orderId = (TextView)vi.findViewById(R.id.idField);
+        final TextView orderId = (TextView)vi.findViewById(R.id.idField);
         orderId.setText(""+item.getId());
         
         TextView orderDesc = (TextView)vi.findViewById(R.id.orderContent);
@@ -46,6 +48,7 @@ public class OrderItemAdapter extends BaseAdapter{
 			
 			@Override
 			public void onClick(View v) {
+                new DeleteOrder().execute(item.getId());
 				data.remove(position);
 				notifyDataSetChanged();
 			}
