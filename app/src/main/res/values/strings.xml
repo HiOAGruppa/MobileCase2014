@@ -15,8 +15,7 @@
 
     <string name="imgdesc">imgdesc</string>
     <string name="priceString">Pris</string>
-    <string name="buyString">Kjøp</string>
-    <string name="confirm">Bekreft bestilling</string>
+    <string name="buyString">Legg til i bestilling</string>
 
     <string-array name="titles">
         <item>Home</item>

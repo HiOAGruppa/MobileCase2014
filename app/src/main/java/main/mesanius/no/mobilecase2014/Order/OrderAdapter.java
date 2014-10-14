@@ -1,6 +1,7 @@
 package main.mesanius.no.mobilecase2014.Order;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,19 +10,17 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-
-import main.mesanius.no.mobilecase2014.Order.OrderItem;
 import main.mesanius.no.mobilecase2014.R;
 
 public class OrderAdapter extends BaseAdapter{
     private Context context;
     private int limit;
-    private int totalPrice = 0;
+    private double totalPrice = 0;
     private TextView totalPriceTextView;
-    private ArrayList<OrderItem> data;
+    private ArrayList<OrderListItem> data;
     private static LayoutInflater inflater = null;
 
-    public OrderAdapter(Context context, ArrayList<OrderItem> data, TextView priceView) {
+    public OrderAdapter(Context context, ArrayList<OrderListItem> data, TextView priceView) {
         this.context = context;
         this.data = data;
         this.limit = data.size();
@@ -29,10 +28,10 @@ public class OrderAdapter extends BaseAdapter{
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
-    public int getTotalPrice() {
+    public double getTotalPrice() {
         totalPrice = 0;
-        for(OrderItem item : data){
-            //totalPrice += item.getTotalPrice();
+        for(OrderListItem item : data){
+            totalPrice += item.getTotalPrice();
         }
         return totalPrice;
     }
@@ -48,7 +47,7 @@ public class OrderAdapter extends BaseAdapter{
     }
 
     @Override
-    public OrderItem getItem(int position) {
+    public OrderListItem getItem(int position) {
         return data.get(position);
     }
 
@@ -57,24 +56,34 @@ public class OrderAdapter extends BaseAdapter{
         return position;
     }
 
-    public OrderItem getItem(String name) {
-        for(OrderItem item : data)
-            ;//if(item.getName().equals(name)) return item;
+    public OrderListItem getItem(String name) {
+        for(OrderListItem item : data)
+            if(item.getName().equals(name)) return item;
         return null;
+    }
+
+    public void addOrderItem(OrderListItem item) {
+        OrderListItem oldItem = getItem(item.getName());
+        if(oldItem == null) { // not already in cart
+            data.add(item);
+        }
+        else {
+            oldItem.incrementQuantity(true, item.getQuantity());
+        }
+
+        notifyDataSetChanged();
+        updateTotalPrice();
     }
 
     public void updateRowItem(View view, boolean increment) {
         Button b = (Button) view;
-        OrderItem item = getItem(b.getTag().toString());
-        item.setQuantity(item.getQuantity()+1);
+        OrderListItem item = getItem(b.getTag().toString());
+        item.incrementQuantity(increment);
 
-        View parent = (View) view.getParent();
-        TextView quantityView = (TextView) parent.findViewById(R.id.quantityTextView);
-        quantityView.setText(item.getQuantity() + " stk");
+        if(item.getQuantity() == 0)
+            data.remove(item);
 
-        TextView priceView = (TextView) ((View)(parent.getParent()).getParent()).findViewById(R.id.priceTextView);
-        //priceView.setText(item.getTotalPrice() + " ,-");
-
+        notifyDataSetChanged();
         updateTotalPrice();
     }
 
@@ -83,17 +92,19 @@ public class OrderAdapter extends BaseAdapter{
         View vi = convertView;
         if (vi == null)
             vi = inflater.inflate(R.layout.order_item, null);
+
+        Log.d("Her", "Er i getview");
         TextView textname = (TextView) vi.findViewById(R.id.itemNameTextView);
-        //textname.setText(data.get(position).getName());
+        textname.setText(data.get(position).getName());
         TextView textprice = (TextView) vi.findViewById(R.id.priceTextView);
-        //textprice.setText(data.get(position).getTotalPrice()+" ,-");
+        textprice.setText(data.get(position).getTotalPrice()+" ,-");
         TextView textquan = (TextView) vi.findViewById(R.id.quantityTextView);
-        textquan.setText(data.get(position).getQuantity()+" stk");
+        textquan.setText(data.get(position).getQuantity()+"");
 
         updateTotalPrice();
 
         Button bMinus = (Button) vi.findViewById(R.id.minusButton);
-        //bMinus.setTag(data.get(position).getName());
+        bMinus.setTag(data.get(position).getName());
         bMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +113,7 @@ public class OrderAdapter extends BaseAdapter{
         });
 
         Button bPlus = (Button) vi.findViewById(R.id.plusButton);
-        //bPlus.setTag(data.get(position).getName());
+        bPlus.setTag(data.get(position).getName());
         bPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

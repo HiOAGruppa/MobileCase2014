@@ -67,7 +67,7 @@ public class CallMenu extends AsyncTask<String, Integer, String> {
         args.putString("JSONMenu", menuItems);
         menuFragment.setArguments(args);
 
-        fragmentTransaction.replace(R.id.root_frame, menuFragment);
+        fragmentTransaction.replace(R.id.menu_frame, menuFragment);
         fragmentTransaction.commit();
 
         progressDialog.dismiss();

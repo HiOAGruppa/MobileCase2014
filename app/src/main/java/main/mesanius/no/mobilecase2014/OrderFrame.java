@@ -9,33 +9,28 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import main.mesanius.no.mobilecase2014.API.CallMenu;
+import main.mesanius.no.mobilecase2014.Order.OrderFragment;
 
 
 /**
  * A simple {@link android.app.Fragment} subclass.
  *
  */
-public class PageFrame extends Fragment {
+public class OrderFrame extends Fragment {
 
-    public PageFrame() {
+    public OrderFrame() {
         // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // Inflate PageFrame Layout som holder andre fragments
-        View view = inflater.inflate(R.layout.page_frame, container, false);
+        View view = inflater.inflate(R.layout.order_frame, container, false);
 
         //Bytte ut det tomme Layoutet i PageFrame med MenyFragment
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-
-        //get menu from API and generate menufragment
-        new CallMenu(getActivity(), transaction).execute("menugen");
-
-        //included in CallMenu
-     //   transaction.replace(R.id.root_frame, new MenuFragment());
-      //  transaction.commit();
-
+        transaction.replace(R.id.order_frame, new OrderFragment(), "OrderFrag");
+        transaction.commit();
         return view;
     }
 }

@@ -53,7 +53,7 @@ public class CallMenuItem extends AsyncTask<String, String, MenuItem> {
 
         // Replace whatever is in the fragment_container view with this fragment,
         // and add the transaction to the back stack so the user can navigate back
-        fragmentTransaction.replace(R.id.root_frame, itemFragment);
+        fragmentTransaction.replace(R.id.menu_frame, itemFragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN);
         fragmentTransaction.commit();
