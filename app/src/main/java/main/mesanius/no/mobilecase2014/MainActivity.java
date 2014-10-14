@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v13.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentActivity;
@@ -82,6 +83,11 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
             finish();
     }
 
+    public void goToOrders() {
+        Intent intent = new Intent(this, OrderActivity.class);
+        finish();
+        startActivity(intent);
+    }
     //Obligatoriske metoder for Actionbar.Tablistener
     @Override
     public void onTabSelected(ActionBar.Tab tab, FragmentTransaction ft) {
@@ -115,6 +121,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            goToOrders();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -146,14 +153,16 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         StringBuilder outString = new StringBuilder();
         double price = 0;
 
+        outString.append("").append("\t\t\t").append("Antall")
+                .append("\t\t").append("Pris");
         for(OrderListItem item: orderList)
         {
-            outString.append(item.getName()).append("\t\t").append(item.getQuantity())
-                    .append("\t").append(item.getPrice()).append("kr\n");
+            outString.append(item.getName()).append("\t\t\t").append(item.getQuantity())
+                    .append("\t\t").append(item.getPrice()).append("kr\n");
             price +=item.getPrice();
         }
         DecimalFormat df = new DecimalFormat("#.##");
-        outString.append("\n\n").append("Totalt:\t\t\t").append(df.format(price)).append("kr");
+        outString.append("\n").append("Totalt:\t\t\t").append(df.format(price)).append("kr");
 
         return outString.toString();
     }

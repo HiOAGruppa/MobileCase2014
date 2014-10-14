@@ -19,6 +19,7 @@
     <string name="confirm">Bekreft bestilling</string>
     <string name="regUser">Registrer ny bruker</string>
     <string name="loggInn">Logg inn</string>
+    <string name="title_activity_order">Aktive bestillinger:</string>
 
 
     <string-array name="titles">

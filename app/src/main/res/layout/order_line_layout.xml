@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:minHeight="150dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/insbg"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="14dp"
+        android:textSize="25sp"
+        android:text="Ordre ID: " />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="150dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:orientation="vertical" 
+        android:gravity="center_vertical"
+        android:layout_marginRight="10dp">
+
+        <Button
+            android:id="@+id/typeBtn"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Person" />
+
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="Fjern"
+            android:layout_marginTop="15dp" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/idField"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textView1"
+        android:layout_alignBottom="@+id/textView1"
+        android:layout_marginLeft="14dp"
+        android:layout_toRightOf="@+id/textView1"
+        android:text="5"
+        android:textSize="30sp" />
+
+    <TextView
+        android:id="@+id/orderContent"
+        android:layout_width="190dp"
+        android:maxWidth="190dp"
+        android:layout_height="90dp"
+        android:minHeight="90dp"
+        android:layout_alignLeft="@+id/textView1"
+        android:layout_below="@+id/idField"
+        android:text="orderDesc"/> 
+</RelativeLayout>

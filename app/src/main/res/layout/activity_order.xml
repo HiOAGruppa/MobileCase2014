@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".ShoppingCart">
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="fill_parent"
+        android:layout_height="match_parent" 
+        android:layout_alignParentBottom="true"/>
+
+        <LinearLayout
+            android:id="@+id/kelnerNeeded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/listView"
+            android:layout_alignLeft="@+id/listView"
+            android:background="@drawable/need_kelner"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <TextView
+                android:id="@+id/kelnerTable"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Bord (4) trenger kelner!"
+                android:textSize="20sp" />
+
+            <Button
+                android:id="@+id/removeCall"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="Fjern" />
+        </LinearLayout>
+
+</RelativeLayout>

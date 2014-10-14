@@ -47,7 +47,6 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 // TODO Auto-generated method stub
                 // Toast.makeText(getActivity(), "Logged Inn", Toast.LENGTH_SHORT);
-                Log.d("SJEKK", ((MainActivity)getActivity()).getToStringList());
             }
         });
         final Button regUser = (Button) getActivity().findViewById(R.id.regUser);
