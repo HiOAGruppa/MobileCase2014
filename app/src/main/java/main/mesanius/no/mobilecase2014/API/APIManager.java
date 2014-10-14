@@ -32,7 +32,7 @@ import main.mesanius.no.mobilecase2014.Order.OrderItem;
  */
 public class APIManager {
 
-    public final static String apiURL = "http://10.0.2.2:8080/rest/";
+    public final static String apiURL = "http://localhost:8080/rest/";
     private Context context;
 
 
@@ -261,13 +261,19 @@ public class APIManager {
         List<Order> allOrders = new ArrayList<Order>();
         try {
             JSONArray completeArray = new JSONArray(JSONstring);
+
+            Log.d("Arraylength", completeArray.length() + "");
             for(int i = 0; i<completeArray.length(); i++){
                 JSONObject oneOrder = completeArray.getJSONObject(i);
+
+                Log.d("arrayOrder", oneOrder.toString());
                 allOrders.add(getOrderFromJSON(oneOrder));
             }
         }catch(Exception e){
             e.printStackTrace();
         }
+        Log.d("allOrders", allOrders.toString());
+
         return allOrders;
     }
 
@@ -278,9 +284,9 @@ public class APIManager {
 
 
             JSONArray itemArray = jsonorder.getJSONArray("items");
-            int orderId = Integer.parseInt(jsonorder.getString("orderId"));
+            int orderId = jsonorder.getInt("orderId");
 
-
+            order.setOrderId(orderId);
             for(int i = 0; i < itemArray.length();i++){
                 JSONObject orderJson = itemArray.getJSONObject(i);
 
