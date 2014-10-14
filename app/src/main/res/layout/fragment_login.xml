@@ -13,25 +13,36 @@
 
         <EditText
             android:id="@+id/usrName"
-            android:layout_width="200dp"
-            android:layout_height="40dp"
+            android:layout_width="250dp"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:hint="Brukernavn" />
 
         <EditText
             android:id="@+id/pwd"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:hint="Passord" />
 
         <Button
             android:id="@+id/getButton"
             android:layout_width="fill_parent"
-            android:layout_height="40dp"
+            android:layout_height="50dp"
             android:layout_margin="10dp"
             android:onClick="getItem"
-            android:text="Logg inn" />
+            android:background="@drawable/button_styled"
+            android:text="@string/loggInn"
+            android:textColor="#FFF"/>
+        <Button
+            android:id="@+id/regUser"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:onClick="getItem"
+            android:textColor="#FFF"
+            android:background="@drawable/button_styled"
+            android:text="@string/regUser" />
 
 
     </LinearLayout>

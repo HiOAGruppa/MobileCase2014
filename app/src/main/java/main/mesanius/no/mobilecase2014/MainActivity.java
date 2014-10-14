@@ -147,7 +147,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 
         for(OrderListItem item: orderList)
         {
-            outString.append(item.getName()).append("\t").append(item.getQuantity())
+            outString.append(item.getName()).append("\t\t").append(item.getQuantity())
                     .append("\t").append(item.getPrice()).append("kr\n");
             price +=item.getPrice();
         }
