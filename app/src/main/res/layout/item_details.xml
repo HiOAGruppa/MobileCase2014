@@ -45,7 +45,7 @@
         android:layout_marginBottom="10dp"
         android:textColor="#FFF"
         android:background="@drawable/button_styled"
-        android:text="@string/buyString" />
+        android:text="@string/addOrder" />
 
     <TextView
         android:id="@+id/textView1"
@@ -56,7 +56,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginLeft="16dp"
         android:textSize="20sp"
-        android:text="@string/priceString" />
+        android:text="@string/price" />
 
     <TextView
         android:id="@+id/itemPrice"

@@ -10,7 +10,7 @@
         android:layout_height="0dp"
         android:layout_weight="6"
         android:gravity="center"
-        android:text="Bestillingen din er tom.\nBestill retter fra menyen!"
+        android:text="@string/emptyOrderWarning"
         android:textSize="15dp"
         android:visibility="gone" />
 
@@ -39,7 +39,7 @@
                 android:id="@+id/totalTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="Total:"
+                android:text="@string/total"
                 android:textSize="25dp" />
 
             <TextView
@@ -59,7 +59,7 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/button_styled"
             android:gravity="center"
-            android:text="Bestill"
+            android:text="@string/continueOrder"
             android:textColor="@android:color/white" />
 
     </LinearLayout>

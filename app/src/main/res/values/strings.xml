@@ -2,35 +2,44 @@
 <resources>
 
     <string name="app_name">MobileCase2014</string>
-    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="title_activity_my">MyActivity</string>
+
     <string name="title_section1">Meny</string>
     <string name="title_section2">Bestilling</string>
     <string name="title_section3">Logg inn</string>
     <string name="title_activity_main">Mesanius</string>
-    <string name="userFields">Fornavn:\nEtternavn:\nE-post:\nTelefon:\nAdresse:\nPoststed:\nPostnr:</string>
-    <string name="userText">Ola\nNormann\nola.nor@nor.no\n99887766\nOsloveien\nOslo\n0445</string>
-    <string name="orderTest">Bestill</string>
-    <string name="imgdesc">imgdesc</string>
-    <string name="priceString">Pris</string>
-    <string name="buyString">Legg til i bestilling</string>
-    <string name="confirm">Bekreft bestilling</string>
-    <string name="regUser">Registrer ny bruker</string>
-    <string name="loggInn">Logg inn</string>
     <string name="title_activity_order">Aktive bestillinger:</string>
-
-    <string-array name="titles">
-        <item>Home</item>
-        <item>Tutorials</item>
-        <item>My Apps</item>
-        <item>OS Versions</item>
-        <item>Tools</item>
-        <item>About Us</item>
-        <item>About Us2</item>
-        <item>About Us3</item>
-    </string-array>
-
     <string name="title_activity_settings">Innstillinger</string>
 
+    <string name="orderId">Ordre ID: </string>
+    <string name="imgdesc">imgdesc</string>
+    <string name="price">Pris</string>
+    <string name="details">Detaljer</string>
+    <string name="remove">Fjern</string>
+    <string name="addOrder">Legg til i bestilling</string>
+
+    <string name="emptyOrderWarning">Bestillingen din er tom.\nBestill retter fra menyen!</string>
+    <string name="total">Total:</string>
+    <string name="your_order">Din Bestilling</string>
+    <string name="reservation">Reserver bord</string>
+    <string name="persons">Personer</string>
+    <string name="order">Bestill</string>
+    <string name="continueOrder">Fortsett bestilling</string>
+    <string name="confirmOrder">Bekreft bestilling</string>
+
+
+    <string name="myPage">Min Side</string>
+    <string name="orderHistory">Ordrehistorikk</string>
+    <string name="editInfo">Rediger informasjon</string>
+    <string name="userFields">Fornavn:\nEtternavn:\nE-post:\nTelefon:\nAdresse:\nPoststed:\nPostnr:</string>
+    <string name="userText">Ola\nNormann\nola.nor@nor.no\n99887766\nOsloveien\nOslo\n0445</string>
+
+    <string name="password">Passord</string>
+    <string name="username">Brukernavn</string>
+    <string name="logIn">Logg inn</string>
+    <string name="logOut">Logg ut</string>
+    <string name="regUser">Registrer ny bruker</string>
+
+    <string name="callWaiter">Tilkall servitør</string>
+    <string name="tempCallWaiter">Bord (4) trenger kelner!</string>
 </resources>

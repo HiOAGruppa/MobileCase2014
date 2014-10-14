@@ -19,7 +19,7 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            android:text="Din ordre"
+            android:text="@string/your_order"
             android:textColor="@android:color/black"
             android:textSize="35sp" />
 
@@ -39,7 +39,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="5dp"
             android:background="@drawable/button_styled"
-            android:text="@string/confirm"
+            android:text="@string/confirmOrder"
             android:textColor="@android:color/white" />
 
         <ScrollView

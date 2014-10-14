@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="15dp"
-        android:text="Min Side"
+        android:text="@string/myPage"
         android:textSize="28sp"  />
     <LinearLayout
         android:id="@+id/linearLayout1"
@@ -27,7 +27,7 @@
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_above="@+id/goBack"
-        android:text="Ordrehistorikk"
+        android:text="@string/orderHistory"
         android:layout_centerHorizontal="true"
          android:layout_marginTop="5dp"
         android:textColor="#FFF"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="16dp"
-        android:text="Logg ut"
+        android:text="@string/logOut"
         android:onClick="logOut"
         android:textColor="#FFF"
         android:layout_centerHorizontal="true"
@@ -84,6 +84,6 @@
         android:layout_centerHorizontal="true"
         android:background="@drawable/button_styled"
         android:textColor="#FFF"
-        android:text="Rediger informasjon" />
+        android:text="@string/editInfo" />
 
 </RelativeLayout>

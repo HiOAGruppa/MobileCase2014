@@ -18,7 +18,6 @@ import main.mesanius.no.mobilecase2014.R;
 
 public class MenuFragment extends ListFragment {
 
-	String[] menutitles;
 	TypedArray menuIcons;
 
 	MenuListAdapter adapter;
@@ -30,7 +29,6 @@ public class MenuFragment extends ListFragment {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		menutitles = getResources().getStringArray(R.array.titles);
         if(savedInstanceState != null){
             String JSONMenu = savedInstanceState.getString("JSONMenu");
             menuListItems = APIManager.getMenuFromString(JSONMenu);
@@ -48,6 +46,7 @@ public class MenuFragment extends ListFragment {
 
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
+
 		// Notify the parent activity of selected item
 		MenuListItem item = menuListItems.get(position);
         FragmentTransaction transaction = getFragmentManager()

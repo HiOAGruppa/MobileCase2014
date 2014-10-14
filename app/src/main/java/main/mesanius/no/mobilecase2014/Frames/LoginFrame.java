@@ -38,6 +38,7 @@ public class LoginFrame extends Fragment {
         return view;
     }
 
+    //Oppdatere fragmentet i loginframe til ved pålogging/pålogget tilstand
     public void updateFragment() {
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         switch (((MainActivity)getActivity()).user) {

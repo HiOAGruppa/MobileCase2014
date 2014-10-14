@@ -29,7 +29,7 @@ public class OrderFrame extends Fragment {
         // Inflate PageFrame Layout som holder andre fragments
         View view = inflater.inflate(R.layout.order_frame, container, false);
 
-        //Bytte ut det tomme Layoutet i PageFrame med OrderFragment
+        //Bytte ut det tomme Layoutet i Frame-Layout med OrderFragment
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.order_frame, of, "OrderFrag");
         transaction.commit();

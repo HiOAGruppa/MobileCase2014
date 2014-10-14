@@ -31,7 +31,7 @@
         android:layout_centerHorizontal="true"
         android:layout_margin="10dp"
         android:background="@drawable/button_styled"
-        android:text="@string/orderTest"
+        android:text="@string/order"
         android:textColor="@android:color/white" />
 
     <LinearLayout
@@ -135,7 +135,7 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Reserver bord" />
+                android:text="@string/reservation" />
 
             <CheckBox
                 android:id="@+id/reserveTable"
@@ -147,7 +147,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
-                android:text="Personer" />
+                android:text="@string/persons" />
 
             <EditText
                 android:id="@+id/editText1"

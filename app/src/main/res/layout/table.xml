@@ -25,7 +25,7 @@
             android:layout_height="50dp"
             android:layout_margin="10dp"
             android:background="@drawable/button_styled"
-            android:text="Tilkall servitør"
+            android:text="@string/callWaiter"
             android:textColor="#FFF"/>
 
         <Button
@@ -35,7 +35,7 @@
             android:layout_margin="10dp"
             android:onClick="logOut"
             android:background="@drawable/button_styled"
-            android:text="Logg ut"
+            android:text="@string/logOut"
             android:textColor="#FFF"/>
     </LinearLayout>
 

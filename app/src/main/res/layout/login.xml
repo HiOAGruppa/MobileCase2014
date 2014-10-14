@@ -16,14 +16,14 @@
             android:layout_width="250dp"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:hint="Brukernavn" />
+            android:hint="@string/username" />
 
         <EditText
             android:id="@+id/pwd"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
             android:layout_margin="10dp"
-            android:hint="Passord" />
+            android:hint="@string/password" />
 
         <Button
             android:id="@+id/getButton"
@@ -32,7 +32,7 @@
             android:layout_margin="10dp"
             android:onClick="login"
             android:background="@drawable/button_styled"
-            android:text="@string/loggInn"
+            android:text="@string/logIn"
             android:textColor="#FFF"/>
         <Button
             android:id="@+id/regUser"
