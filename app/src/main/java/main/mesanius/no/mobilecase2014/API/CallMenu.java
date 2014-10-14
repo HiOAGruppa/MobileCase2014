@@ -23,8 +23,8 @@ public class CallMenu extends AsyncTask<String, String, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        String[] empty = {""};
-        String JSONdata = APIManager.fetchJSON(empty);
+        String menu = "menu/";
+        String JSONdata = APIManager.fetchJSON(menu);
         return JSONdata;
     }
 

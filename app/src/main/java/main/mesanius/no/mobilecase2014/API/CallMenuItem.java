@@ -30,7 +30,8 @@ public class CallMenuItem extends AsyncTask<String, String, MenuItem> {
     //will return arraylist of length= 1 for menuitems, returns normal list for full menu. (Attach some sort of end-node to
     //indicate if list or single item if menulength is 1!!!
     protected MenuItem doInBackground(String... strings) {
-        String JSONdata = APIManager.fetchJSON(strings);
+        String menuItem = "menu/" + strings[0];
+        String JSONdata = APIManager.fetchJSON(menuItem);
 
         return APIManager.getMenuItemFromString(JSONdata);
 

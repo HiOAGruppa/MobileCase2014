@@ -10,6 +10,7 @@ import android.widget.ListView;
 import java.util.List;
 
 import main.mesanius.no.mobilecase2014.API.APIManager;
+import main.mesanius.no.mobilecase2014.API.CallOrders;
 import main.mesanius.no.mobilecase2014.MainActivity;
 import main.mesanius.no.mobilecase2014.R;
 
@@ -44,7 +45,8 @@ public class MenuFragment extends ListFragment {
         }
 
         // new PostOrder(getActivity()).execute("test");
-
+        //new DeleteOrder(this.getActivity()).execute("10");
+        new CallOrders().execute();
 
         //original menuitemsList generation DELETE LATER
         /*

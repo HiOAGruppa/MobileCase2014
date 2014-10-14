@@ -5,6 +5,7 @@ import android.util.Log;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpDelete;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -37,13 +38,9 @@ public class APIManager {
 
 
     //returns the raw JSON-string
-    public static String fetchJSON(String[] strings){
-        String urlString;
-        //if there are no extra string-inputs, we get the full menu.
-        if(!strings[0].equals(""))
-            urlString = apiURL + "menu/"+strings[0]; // url to call
-        else
-            urlString = apiURL + "menu/";
+    public static String fetchJSON(String string){
+        //apiUrl in addition to spesific path such as order/ menu/ or menu/item
+        String urlString = apiURL +string; // url to call
 
         Log.d("ApiUrl", urlString);
 
@@ -121,6 +118,28 @@ public class APIManager {
             e.printStackTrace();
         }
         return result;
+    }
+
+    public static boolean deleteOrder(int orderId){
+        String urlString = apiURL + "order/" + orderId;
+        InputStream in = null;
+        try {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpDelete httpDelete = new HttpDelete(urlString);
+            HttpResponse httpResponse = httpClient.execute(httpDelete);
+
+            in = httpResponse.getEntity().getContent();
+            if(in != null){
+                Log.d("httpdelete", convertPostStreamToString(in));
+                in.close();
+                return true;
+            }
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 
