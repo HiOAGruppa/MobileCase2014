@@ -75,7 +75,5 @@ public class MenuFragment extends ListFragment {
         ItemFragment itemFragment = new ItemFragment();
 
         new CallMenuItem(transaction, itemFragment).execute(String.valueOf(item.getId()));
-
 	}
-
 }
