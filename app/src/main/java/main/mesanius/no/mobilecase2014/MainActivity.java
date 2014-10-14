@@ -119,6 +119,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         return super.onOptionsItemSelected(item);
     }
 
+    //OrderListMetoder
     public ArrayList<OrderListItem> getOrderList(){
         return orderList;
     }
@@ -127,7 +128,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         Log.d("Added orderItem: ", item.getName());
         for (OrderListItem i: orderList) {
             if (i.getName().equals(item.getName())){
-                i.incrementQuantity();
+                i.setQuantity(true);
                 return true;
             }
         }
@@ -138,7 +139,6 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
     public boolean removeFromOrderList(OrderListItem item){
         return orderList.remove(item);
     }
-
 
     public void clearOrderList(){
         orderList.clear();
