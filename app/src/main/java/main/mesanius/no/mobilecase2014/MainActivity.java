@@ -238,7 +238,7 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
         {
             outString.append(item.getName()).append("\t\t\t").append(item.getQuantity())
                     .append("\t\t").append(item.getPrice()).append("kr\n");
-            price +=item.getPrice();
+            price +=item.getTotalPrice();
         }
         DecimalFormat df = new DecimalFormat("#.##");
         outString.append("\n").append("Totalt:\t\t\t").append(df.format(price)).append("kr");
